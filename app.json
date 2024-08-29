@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "_Academify",
-    "slug": "_Academify",
+    "name": "Academify",
+    "slug": "Academify",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/images/academify-splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#F4EEFF"
     },
     "ios": {
       "supportsTablet": true

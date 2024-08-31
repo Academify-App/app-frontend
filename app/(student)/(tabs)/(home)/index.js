@@ -99,31 +99,31 @@ const index = () => {
           </View>
           <View className="flex-1 flex-row flex-wrap gap-2 mt-2 relative">
           {data.map((item,index)=>(
-              <View key={index} className="flex-col rounded-[20px] w-[46%] flex-grow" style={styles.shadow}>
-                <View>
-                  <Image source={item.img} className="w-full h-[100px] rounded-tr-[20px] rounded-tl-[20px]"/>
-                </View>
-                <View className="bg-[#000] rounded-bl-[20px] rounded-br-[20px] pt-2 pb-4 pl-1">
-                  <View className="flex-row justify-between pr-3">
-                    <View className="p-1">
-                      <Text className="text-slate-300 text-[12px]">{item.course}</Text>
-                      <Text className="text-white text-[15px] mt-1">{item.program}</Text>
-                    </View>
-                    <Text className="text-white font-robotobold text-[15px]">N{item.price}</Text>
-                  </View>
-                  <View className="flex-row justify-between mt-2">
-                    <View className="flex-row ml-1">
-                      <Image source={icons.star} className="w-[12px] h-[12px]"/>
-                      <Text className="text-white text-[11px] ml-[1px]">{item.rating}</Text>
-                    </View>
-                    <Text className="text-white text-[11px]">{item.level} level</Text>
-                    <Text className="text-white text-[11px] mr-2">{item.reviews} Reviews</Text>
-                  </View>
-                </View>
-                <TouchableOpacity className="absolute left-[80%] top-[6%]">
-                  <AntDesign name="heart" size={24} color="white" />
-                </TouchableOpacity>
+            <View key={index} className="flex-col rounded-[20px] w-[46%] flex-grow" style={styles.shadow}>
+              <View>
+                <Image source={item.img} className="w-full h-[100px] rounded-tr-[20px] rounded-tl-[20px]"/>
               </View>
+              <View className="bg-[#000] rounded-bl-[20px] rounded-br-[20px] pt-2 pb-4 pl-1">
+                <View className="flex-row justify-between pr-3">
+                  <View className="p-1">
+                    <Text className="text-slate-300 text-[12px]">{item.course}</Text>
+                    <Text className="text-white text-[15px] mt-1">{item.program}</Text>
+                  </View>
+                  <Text className="text-white font-robotobold text-[15px]">N{item.price}</Text>
+                </View>
+                <View className="flex-row justify-between mt-2">
+                  <View className="flex-row ml-1">
+                    <Image source={icons.star} className="w-[12px] h-[12px]"/>
+                    <Text className="text-white text-[11px] ml-[1px]">{item.rating}</Text>
+                  </View>
+                  <Text className="text-white text-[11px]">{item.level} level</Text>
+                  <Text className="text-white text-[11px] mr-2">{item.reviews} Reviews</Text>
+                </View>
+              </View>
+              <TouchableOpacity className="absolute left-[80%] top-[6%]">
+                <AntDesign name="heart" size={24} color="white" />
+              </TouchableOpacity>
+            </View>
           ))}
           </View>
         </View>

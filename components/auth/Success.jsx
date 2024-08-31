@@ -17,7 +17,7 @@ const Success = () => {
       entering={FadeInUp}
       exiting={FadeOutUp}
       style={{
-        top:40,
+        bottom:30,
         zIndex: 100,
         backgroundColor: '#3B3C36',
         width: '90%',

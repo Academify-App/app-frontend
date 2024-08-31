@@ -2,6 +2,7 @@ import { Stack, useRouter } from 'expo-router';
 import { View,Image, TouchableOpacity } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign'
 import icons from '../../../../constants/icons';
+import { StatusBar } from 'expo-status-bar';
 
 
 export default function homeLayout() {
@@ -9,6 +10,7 @@ export default function homeLayout() {
 
   return (
     <>
+    <StatusBar barStyle='dark-content'/>
       <Stack>
         <Stack.Screen name="index" options={{headerTitle: "",headerShown:false}}/>
         <Stack.Screen name="categories" options={{headerTitle: "",headerShown:false}}/>

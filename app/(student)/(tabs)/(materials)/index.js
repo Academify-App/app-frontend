@@ -68,13 +68,13 @@ const index = () => {
 }
 
 const styles = StyleSheet.create({
-    shadow: {
-      shadowColor: '#000',
-      shadowOpacity: 0.3,
-      shadowRadius: 2,  
-      elevation: 5,
-      shadowOffset: { width: 0, height: 2 }
-    },   
+  shadow: {
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 2,  
+    elevation: 5,
+    shadowOffset: { width: 0, height: 2 }
+  },   
   })
 
 export default index

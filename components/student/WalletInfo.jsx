@@ -21,7 +21,7 @@ const WalletInfo = () => {
         <View className="relative mr-6">
           <Fontisto name="bell" size={24} color="white" />
           <View className="bg-red-500 rounded-full absolute left-5 w-[30px]">
-            <Text className="text-white text-[10px] text-center">99+</Text>
+            <Text className="text-white text-[10px] text-center font-roboto">99+</Text>
           </View>
         </View>
       </View>

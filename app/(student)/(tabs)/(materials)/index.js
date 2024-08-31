@@ -33,8 +33,8 @@ const index = () => {
         </View>
 
         <View className="flex-1 flex-row flex-wrap gap-3 mt-3">
-           { data.map((item,index)=>(
-            <TouchableOpacity key={index} className="flex-col rounded-[20px] w-[45%] flex-grow" style={styles.shadow}>
+          { data.map((item,index)=>(
+          <TouchableOpacity key={index} className="flex-col rounded-[20px] w-[45%] flex-grow" style={styles.shadow}>
             <View>
               <Image source={item.image} className="w-full h-[100px] rounded-tr-[20px] rounded-tl-[20px]"/>
             </View>
@@ -57,7 +57,7 @@ const index = () => {
               </View>
             </View>
           </TouchableOpacity>
-           ))}
+          ))}
         </View>
         <View className="h-[50px]">
           <Text className="opacity-0">hidden</Text>

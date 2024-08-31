@@ -11,8 +11,8 @@ import AuthContext from '../../context/AuthContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SignIn = () => {
-  const {registerSuccess,loading,invalidCredentials,registerServerError} = useContext(AuthContext)
   const router = useRouter()
+  const {registerSuccess,loading,invalidCredentials,registerServerError} = useContext(AuthContext)
 
   const retrieveData = async () => {
     try {
@@ -27,7 +27,7 @@ const SignIn = () => {
 
   useEffect(()=>{
     retrieveData()
-  })
+  },[])
 
   return (
     <SafeAreaView className="bg-[#3d1879] w-full flex-1">

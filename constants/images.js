@@ -4,6 +4,7 @@ import OtpLoader from "../assets/images/OtpLoader.gif"
 import maleProfessor from "../assets/images/professor-with-beard.png"
 import femaleProfessor from "../assets/images/professor with glasses.png"
 import studying from "../assets/images/studying.jpg"
+import profile from "../assets/images/profile.jpg"
 
 export default {
     authLines,
@@ -11,5 +12,6 @@ export default {
     OtpLoader,
     maleProfessor,
     femaleProfessor,
-    studying
+    studying,
+    profile
 }

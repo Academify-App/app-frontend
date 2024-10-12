@@ -1,17 +1,25 @@
-import {SafeAreaView, ScrollView, Text, View, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import {SafeAreaView, ScrollView, Text, View, Image, TextInput, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
 import { Link, useRouter } from 'expo-router'
 import { useEffect, useState } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import icons  from "../../../../constants/icons"
 import data from "../../../../availableCourses"
+import Fontisto from '@expo/vector-icons/Fontisto';
 import FilterPopup from '../../../../components/student/FilterPopup';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const index = () => {
+  const {width} = Dimensions.get('window')
   const router = useRouter()
 
   const [filterShown,setFilterShown] = useState(false)
   const [userObj,setUserObj] = useState("")
+
+  const adjustWidth = () => {
+    if(width < 375){
+      return 'text-[11px]'
+    }
+  }
 
   const hideFilter = () => {
     setFilterShown(false)
@@ -43,11 +51,11 @@ const index = () => {
             <Text className="mt-2 w-[90%] text-slate-400">What would you like to get Today? Search below</Text>
           </View>
 
-          <View className="relative">
-            <View className="absolute left-[60%] bg-[#FF3E6C] rounded-full w-[25px]">
+          <View className="relative mr-5">
+            <View className="absolute left-[90%] bg-[#FF3E6C] rounded-full w-[25px]">
               <Text className="text-[10px] text-white text-center">99+</Text>
             </View>
-            <Image className="w-[40px] h-[40px]" source={icons.notificationBell}/>
+            <Fontisto name="bell" size={24} color="black" />
           </View>
         </View>
 
@@ -55,7 +63,7 @@ const index = () => {
           <TouchableOpacity className="w-[30px] pt-3 pl-1">
             <Image source={icons.search}/>
           </TouchableOpacity>
-          <TextInput className="ml-2 font-robotomedium w-[75%] text-[14px]"
+          <TextInput className={`ml-2 font-robotomedium ${adjustWidth()} w-[75%]`}
             placeholder='Search for resource provider or course'
             placeholderTextColor='lightgrey'
           />
@@ -68,7 +76,7 @@ const index = () => {
 
         <View className="mt-5">
           <View className="flex-row justify-between">
-            <Text className="text-2xl font-robotomedium text-[#250F53]">Categories</Text>
+            <Text className="text-[16px] font-robotomedium text-[#250F53]">Categories</Text>
             <Link href='/categories'>
             <Text className="font-roboto text-[#5C3C9B] mt-2">See all</Text>
             </Link>
@@ -92,33 +100,44 @@ const index = () => {
           </View>
         </View>
 
-        <View className="mt-5">
+        <View className="mt-5 flex-1">
           <View className="flex-row justify-between">
-            <Text className="text-2xl font-robotomedium text-[#250F53]">Recent Available Courses</Text>
-            <Text className="font-roboto text-[#5C3C9B] mt-2">See more</Text>
+            <Text className="text-[16px] font-robotomedium text-[#250F53]">Recent Available Courses</Text>
+            <Text className="font-roboto text-[#5C3C9B]">See more</Text>
           </View>
-          <View className="flex-1 flex-row flex-wrap gap-2 mt-2 relative">
+          <View className="flex-1 flex-row flex-wrap justify-between gap-2 mt-2 relative w-full">
           {data.map((item,index)=>(
             <View key={index} className="flex-col rounded-[20px] w-[46%] flex-grow" style={styles.shadow}>
               <View>
                 <Image source={item.img} className="w-full h-[100px] rounded-tr-[20px] rounded-tl-[20px]"/>
               </View>
-              <View className="bg-[#000] rounded-bl-[20px] rounded-br-[20px] pt-2 pb-4 pl-1">
-                <View className="flex-row justify-between pr-3">
-                  <View className="p-1">
-                    <Text className="text-slate-300 text-[12px]">{item.course}</Text>
-                    <Text className="text-white text-[15px] mt-1">{item.program}</Text>
+              <View className="bg-[#000] rounded-bl-[20px] rounded-br-[20px] pt-2 pb-4 pl-2">
+                <View>
+                  <View>
+                    <Text numberOfLines={1} className="text-slate-300 text-[12px]">{item.course}</Text>
                   </View>
-                  <Text className="text-white font-robotobold text-[15px]">N{item.price}</Text>
-                </View>
-                <View className="flex-row justify-between mt-2">
-                  <View className="flex-row ml-1">
-                    <Image source={icons.star} className="w-[12px] h-[12px]"/>
-                    <Text className="text-white text-[11px] ml-[1px]">{item.rating}</Text>
+                  <View>
+                    <Text numberOfLines={1} className="text-white text-[15px] mt-1">{item.program}</Text>
                   </View>
-                  <Text className="text-white text-[11px]">{item.level} level</Text>
-                  <Text className="text-white text-[11px] mr-2">{item.reviews} Reviews</Text>
                 </View>
+
+                <View className>
+                  <Text className="text-white font-robotobold text-[15px] mt-1">N{item.price}</Text>
+                </View>
+
+                <View className="flex-row justify-between mt-2 flex-wrap pr-2">
+                  <View className="flex-row">
+                    <AntDesign name="star" size={11} color="#FFBF00" style={{margin:"auto"}}/>
+                    <Text className="text-white text-[11px] ml-[3px]">{item.rating}</Text>
+                  </View>
+                  <View>
+                    <Text className="text-white text-[11px]">{item.level} level</Text>
+                  </View>
+                  <View>
+                    <Text className="text-white text-[11px] mr-2">{item.reviews} Reviews</Text>
+                  </View>
+                </View>
+
               </View>
               <TouchableOpacity className="absolute left-[80%] top-[6%]">
                 <AntDesign name="heart" size={24} color="white" />
@@ -127,6 +146,7 @@ const index = () => {
           ))}
           </View>
         </View>
+
         <View className="h-[50px]">
           <Text className="opacity-0">hidden</Text>
         </View>

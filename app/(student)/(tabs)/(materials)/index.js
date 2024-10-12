@@ -7,11 +7,12 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 
 const index = () => {
   const router = useRouter()
+  
   return (
     <SafeAreaView className="flex-1 w-[98%] mt-5">
       <ScrollView className="pt-6 pl-3 pb-20" showsVerticalScrollIndicator={false}>
         <View>
-          <View className="flex-row w-[50%]">
+          <View className="flex-row">
             <TouchableOpacity onPress={()=>router.back()}>
               <AntDesign name="arrowleft" size={25} color="#292D32" style={{margin:"auto"}}/>
             </TouchableOpacity>
@@ -23,7 +24,7 @@ const index = () => {
         </View>
 
         <View className="w-full mt-5 p-4 rounded-[15px] border border-slate-300 flex-row justify-between">
-          <TextInput className="ml-2 font-robotomedium w-[75%] text-[14px]"
+          <TextInput className="pl-1 font-robotomedium text-[14px]"
             placeholder='Search by course/providers name'
             placeholderTextColor='lightgrey'
           />
@@ -42,9 +43,11 @@ const index = () => {
               <View className="flex-row justify-between">
                 <View className="p-1 w-full">
                   <View className="flex-row justify-between">
-                    <Text className="text-slate-500 text-[10px]">{item.course}</Text>
+                    <View className="w-[60%]">
+                      <Text numberOfLines={1} className="text-slate-500 text-[10px]">{item.course}</Text>
+                    </View>
                     <View className="flex-row">
-                      <Image source={icons.star} className="w-[12px] h-[12px]"/>
+                      <AntDesign name="star" size={12} color="#FFBF00" style={{margin:"auto",paddingRight:3}}/>
                       <Text className="font-robotomedium text-[11px] ml-[1px]">{item.rating}</Text>
                     </View>
                   </View>

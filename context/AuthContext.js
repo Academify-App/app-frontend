@@ -8,6 +8,7 @@ const AuthContext = createContext()
 export const AuthProvider = ({children}) => {
   const url = config.authURL
   const router = useRouter()
+  const [bottomSheet,setBottomSheet] = useState(false)
   const [loading,setLoading] = useState(false)
   const [OtpLoading,setOtpLoading] = useState(false)
   const [OtpSuccess,setOtpSuccess] = useState(false)
@@ -130,6 +131,8 @@ export const AuthProvider = ({children}) => {
 
   return(
     <AuthContext.Provider value={{
+      bottomSheet,
+      setBottomSheet,
       loading,
       setLoading,
       OtpLoading,

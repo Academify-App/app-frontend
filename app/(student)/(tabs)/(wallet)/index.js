@@ -5,8 +5,8 @@ import WalletActivity from '../../../../components/student/WalletActivity'
 const index = () => {
   return (
     <SafeAreaView className="w-full bg-[#2B145A] pt-10 min-h-screen flex-1">
-      <WalletInfo/>
       <ScrollView>
+        <WalletInfo/>
         <WalletActivity/>
       </ScrollView>
     </SafeAreaView>

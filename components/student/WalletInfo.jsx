@@ -1,4 +1,5 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { useRouter } from "expo-router"
 import images from '../../constants/images'
 import Fontisto from '@expo/vector-icons/Fontisto';
 import Feather from '@expo/vector-icons/Feather';
@@ -6,6 +7,8 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 const WalletInfo = () => {
+  const router = useRouter()
+
   return (
     <View className="bg-[#2B145A] p-[20px]">
       <View className="flex-row justify-between w-full">
@@ -43,7 +46,9 @@ const WalletInfo = () => {
             <MaterialCommunityIcons name="arrow-collapse-down" size={17} color="lightgrey" />
             <Text className="text-white font-robotomedium mt-2">Withdraw</Text>
           </TouchableOpacity>
-          <TouchableOpacity className=" flex-1 p-2 h-[50px] justify-center items-center border-r-[1px] border-r-slate-400">
+          <TouchableOpacity className=" flex-1 p-2 h-[50px] justify-center items-center border-r-[1px] border-r-slate-400"
+          onPress={()=>router.push('/(student)/(tabs)/(wallet)/transfer')}
+          >
             <FontAwesome6 name="money-bill-transfer" size={17} color="lightgrey" />
             <Text className="text-white font-robotomedium mt-2">Transfer</Text>
           </TouchableOpacity>

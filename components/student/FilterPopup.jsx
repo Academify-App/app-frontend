@@ -73,7 +73,7 @@ const FilterPopup = ({hideFilter}) => {
               className="w-[25px] h-[25px] rounded-md"/>
               <Text className="pl-3 font-robotomedium text-[17px] m-auto">Projects</Text>
             </View>
-            <View className="flex-row pl-3">
+            <View className="flex-row">
               <Checkbox 
               color={projectChecked ? "#250F53" : undefined}
               value={projectChecked}
@@ -89,14 +89,14 @@ const FilterPopup = ({hideFilter}) => {
 
         <View className="mt-3">
           <Text className="text-[#2B145A] font-robotomedium text-[25px] mt-3">Levels</Text>
-          <View className="flex-row w-[100px] mt-5">
+          <View className="flex-row w-[120px] mt-5">
             <Checkbox 
               color={allLevelsChecked ? "#250F53" : undefined}
               value={allLevelsChecked}
               onValueChange={setAllLevelsChecked}
               className="w-[25px] h-[25px] rounded-md"
             />
-            <Text className="pl-2 font-robotomedium text-[17px] m-auto">All Levels</Text>
+            <Text className="pl-1 font-robotomedium text-[17px] m-auto">All Levels</Text>
           </View>
           <View className="flex-row gap-5 mt-0 flex-wrap w-[300px]" >
             <View className="flex-row">
@@ -149,14 +149,14 @@ const FilterPopup = ({hideFilter}) => {
 
         {/* Price Section  */}
 
-        <View className="mt-5">
+        <View className="mt-5 w-full">
           <Text className="text-[#2B145A] text-xl">Price range</Text>
           <View className="flex-row mt-3 justify-between">
-            <TouchableOpacity className="border border-slate-400 px-10 py-3 rounded-lg flex-row"> 
+            <TouchableOpacity className="border border-slate-400 px-5 py-3 rounded-lg flex-row"> 
               <Text>Min.Price</Text>
               <Image className="ml-3 mt-1" source={icons.dropdown}/>
             </TouchableOpacity>
-            <TouchableOpacity className="border border-slate-400 px-10 py-3 rounded-lg ml-6 flex-row">
+            <TouchableOpacity className="border border-slate-400 px-5 py-3 rounded-lg ml-6 flex-row">
               <Text>Max.Price</Text>
               <Image className="ml-3 mt-1" source={icons.dropdown}/>
             </TouchableOpacity>

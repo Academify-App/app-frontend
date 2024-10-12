@@ -8,12 +8,23 @@ import data from '../../../../pdfData'
 const pdfMaterials = () => {
   const router = useRouter()
 
-  const passData = () => {
-    router.push('/pdfMaterialDetails')
+  const passData = (item) => {
+    router.push({pathname:'/pdfMaterialDetails',params:{
+     img:item.img,
+     title:item.title,
+     subtitle:item.subtitle,
+     price:item.price,
+     ratings:item.ratings,
+     downloads:item.downloads,
+     locked:item.locked,
+     resourceProvider:JSON.stringify(item.resourceProvider),
+     profile:JSON.stringify(item.profile),
+     providerReviews:JSON.stringify(item.providerReviews)
+    }})
   }
 
   return (
-    <SafeAreaView className="flex-1 w-[98%] mt-5">
+    <SafeAreaView className="flex-1 w-[98%] mt-5 min-h-screen">
       <View className="pt-6 pl-3 flex-1">
         <View>
           <View className="flex-row w-[70%]">
@@ -37,18 +48,20 @@ const pdfMaterials = () => {
           </TouchableOpacity>
         </View>
 
-        <View className="mt-4 flex-1">
+        <View className="mt-4 flex-1 w-full">
           <Text className="text-[#250F53] text-3xl font-robotomedium">All Courses</Text>
           <FlatList
           data={data}
           renderItem={({item,index}) => (
-            <TouchableOpacity className="w-full border-b border-b-slate-400 py-5 flex-row justify-between" onPress={()=>passData()}>
+            <TouchableOpacity className="w-full border-b border-b-slate-400 py-5 flex-row justify-between" 
+            onPress={()=>passData(item)}
+            >
               <View className="flex-row">
                 <View className="border border-slate-400 w-[40px] h-[40px] rounded-full flex justify-center items-center">
                   <Text className="font-robotomedium text-[#9C50E7]">{`${index < 10 && '0'}${index+1}`}</Text>
                 </View>
-                <View className="ml-2 w-[250px] leading-3">
-                  <Text className="font-robotobold text-[#250F53] text-lg">{item.title}</Text>
+                <View className="ml-2 w-[65%] leading-3">
+                  <Text numberOfLines={1} className="font-robotobold text-[#250F53] text-lg">{item.title}</Text>
                   <Text numberOfLines={1} className=" text-[#545454] opacity-50 font-robotomedium text-sm">{item.subtitle}</Text>
                 </View>
               </View>

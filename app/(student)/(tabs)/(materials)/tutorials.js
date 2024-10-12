@@ -1,6 +1,8 @@
 import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity, TextInput, Image, FlatList } from 'react-native'
 import { useRouter } from "expo-router"
 import AntDesign from '@expo/vector-icons/AntDesign';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import icons from '../../../../constants/icons';
 
 const tutorials = () => {
@@ -86,21 +88,21 @@ const tutorials = () => {
           </View>
           <View className="ml-2 flex-grow pr-4">
             <View className="flex-row justify-between mt-4">
-              <Text className="text-[#9747FF] font-robotomedium">{item.course}</Text>
-              <Image className="w-[17px] h-[20px]" source={icons.love}/>
+              <Text numberOfLines={1} className="text-[#9747FF] font-robotomedium w-[60%]">{item.course}</Text>
+              <FontAwesome name="bookmark-o" size={20} color="black" />
             </View>
             <View className="mt-1">
-              <Text className="text-[#2B145A] font-robotobold text-lg">{item.topic}</Text>
+              <Text numberOfLines={1} className="text-[#2B145A] font-robotobold text-lg w-[90%]">{item.topic}</Text>
               <Text className="text-[#9747FF] text-lg">N{item.price}</Text>
             </View>
             <View className="flex-row justify-between mt-3">
               <View className="flex-row">
-                <Image className="w-[15px] h-[15px]" source={icons.star}/>
+                <AntDesign name="star" size={13} color="#FFBF00" style={{margin:"auto"}} />
                 <Text className="font-robotobold ml-1">{item.rating}</Text>
               </View>
               <Text className="font-robotobold">{item.numOfVideos} videos</Text>
               <View>
-                <Image className="w-[17px] h-[20px]" source={icons.lock}/>
+                <MaterialIcons name="lock-outline" size={20} color="#9747FF" />
               </View>
             </View>
           </View>

@@ -1,16 +1,36 @@
 import { Tabs, useSegments } from 'expo-router';
 import { Image,Text,View } from 'react-native';
 import icons from "../../../constants/icons"
+import { useContext } from 'react';
+import AuthContext from '../../../context/AuthContext';
 
 export default function TabLayout() {
+  const {bottomSheet} = useContext(AuthContext)
+
   const segments = useSegments()
   const currentRoute = segments.join('/')
 
   return (
     <Tabs  screenOptions={{headerShown: false,
       tabBarStyle: {
-        height: 57,   
-        display: `${currentRoute === '(student)/(tabs)/(home)/pdfMaterials' && 'none'}`
+        height: 60,
+        display: 
+        currentRoute === '(student)/(tabs)/(home)/pdfMaterials' ||
+        currentRoute === '(student)/(tabs)/(home)/pdfMaterialDetails' ||
+        currentRoute === '(student)/(tabs)/(wallet)/bankTransfer' ||
+        currentRoute === '(student)/(tabs)/(wallet)/walletTransfer' ||
+        currentRoute === '(student)/(tabs)/(profile)/(post)' ||
+        currentRoute === '(student)/(tabs)/(profile)/(post)/addPhotosVideos' ||
+        currentRoute === '(student)/(tabs)/(profile)/(post)/photoDisplay' ||
+        currentRoute === '(student)/(tabs)/(profile)/(post)/addMaterialDetails' ||
+        currentRoute === '(student)/(tabs)/(profile)/(post)/addMaterialTitle' ||
+        currentRoute === '(student)/(tabs)/(profile)/(post)/addMaterialDescription' ||
+        currentRoute === '(student)/(tabs)/(profile)/(post)/addMaterialPrice' || 
+        currentRoute === '(student)/(tabs)/(profile)/(post)/materialReview' ||
+        currentRoute === '(student)/(tabs)/(profile)/profileInfo' ||
+        bottomSheet 
+        ? 'none' : '',
+           
       },
     }}
     initialRouteName="(home)"

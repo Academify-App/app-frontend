@@ -1,9 +1,8 @@
 import { Stack, useRouter } from 'expo-router';
-import { View,Image, TouchableOpacity } from 'react-native';
+import { StatusBar } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign'
-import icons from '../../../../constants/icons';
-import { StatusBar } from 'expo-status-bar';
-
 
 export default function homeLayout() {
   const router = useRouter()
@@ -25,10 +24,10 @@ export default function homeLayout() {
           headerRight:() => (
             <View className="flex-row">
               <TouchableOpacity className="w-[40px] h-[40px] flex justify-center items-center rounded-full bg-gray-200">
-               <Image className="w-[25px] h-[25px]" source={icons.love} />
+                <AntDesign name="heart" size={24} color="white" />
               </TouchableOpacity>
               <TouchableOpacity className="w-[40px] h-[40px] flex justify-center items-center rounded-full bg-gray-200 ml-2">
-               <Image className="w-[25px] h-[25px]" source={icons.share} />
+                <Ionicons name="download-outline" size={24} color="black" />
               </TouchableOpacity>
           </View>
           )

@@ -32,6 +32,8 @@ import studentProfile from "../assets/icons/user.png"
 import studentProfileActive from "../assets/icons/user-active.png"
 import studentWallet from "../assets/icons/wallet.png"
 import studentWalletActive from "../assets/icons/wallet-active.png"
+import profileIcon from "../assets/icons/profileScreenProfile.png"
+import profileArrow from "../assets/icons/profileScreenArrow.png"
 
 export default { 
     eye,
@@ -67,5 +69,7 @@ export default {
     studentProfile,
     studentProfileActive,
     studentWallet,
-    studentWalletActive
+    studentWalletActive,
+    profileIcon,
+    profileArrow
 }

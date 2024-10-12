@@ -15,14 +15,17 @@ const SignIn = () => {
   const {registerSuccess,loading,invalidCredentials,registerServerError} = useContext(AuthContext)
 
   const retrieveData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('accessToken');
-      if (value !== null) {
-        router.replace("/(student)/(tabs)/(home)")
-      }
-    } catch (error) {
-      console.error('Error retrieving data', error);
-    }
+    setTimeout(()=>{
+      router.replace("/(student)/(tabs)/(home)")
+    },200)
+    // try {
+    //   const value = await AsyncStorage.getItem('accessToken');
+    //   if (value !== null) {
+    //     router.replace("/(student)/(tabs)/(home)")
+    //   }
+    // } catch (error) {
+    //   console.error('Error retrieving data', error);
+    // }
   };
 
   useEffect(()=>{

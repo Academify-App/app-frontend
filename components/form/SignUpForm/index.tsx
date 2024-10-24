@@ -18,32 +18,38 @@ const SignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignUpFormData>();
+  } = useForm<SignUpFormData>({ mode: "onChange" });
 
-  const [userType, setUserType] = useState();
+  // const [userType, setUserType] = useState();
 
   return (
     <View className="mt-6">
       <FormInput
         isRequired
         label="Full name"
+        inputMode="text"
         {...register("fullname", { required: true })}
       />
-      {errors.fullname && <Text>This field is required</Text>}
+      {errors.fullname?.message && <Text>This field is required</Text>}
 
       <FormInput
         isRequired
         label="Email address"
-        {...register("email", { required: true })}
+        inputMode="email"
+        {...register("email", {
+          required: true,
+          pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        })}
       />
-      {errors.email && <Text>This field is required</Text>}
+      {errors.email?.message && <Text>This field is required</Text>}
 
       <FormInput
         isRequired
         label="Create password"
-        {...register("password", { required: true })}
+        password
+        {...register("password", { required: true, minLength: 6 })}
       />
-      {errors.password && <Text>This field is required</Text>}
+      {errors.password?.message && <Text>This field is required</Text>}
 
       <View className="flex flex-col gap-y-[6px] mb-5">
         <View className="flex flex-row">
@@ -58,11 +64,17 @@ const SignUpForm = () => {
             <Picker.Item label="Facilitator" value="facilitator" />
           </Picker>
         </View>
-        {errors.fullname && <Text>This field is required</Text>}
+        {errors.identity?.message && <Text>This field is required</Text>}
       </View>
 
       <View className="flex flex-col gap-y-3">
-        <Button text="Sign Up" />
+        <Button
+          text="Sign Up"
+          onPress={handleSubmit((data) => {
+            console.log(data);
+            // Perform sign-up logic here
+          })}
+        />
         <View className="flex flex-row gap-x-1 justify-center items-center">
           <Text className="text-xs text-[#333335] font-normal">
             Do you have an account?{" "}

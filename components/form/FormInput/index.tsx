@@ -1,15 +1,22 @@
 import React from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
+import { EyeSlash, Eye } from "iconsax-react-native";
 
 interface FormInputProps {
   label: string;
   isRequired?: boolean;
+  password?: boolean;
+  inputMode?: string;
 }
 
 const FormInput = React.forwardRef(function FormInput(
-  { label, isRequired, ...props }: FormInputProps,
+  { label, isRequired, password, inputMode, ...props }: FormInputProps,
   ref
 ) {
+  const [isVisible, setIsVisible] = React.useState<boolean>(false);
+
+  const handlePasswordToogle = () => setIsVisible(!isVisible);
+
   return (
     <View className="flex flex-col gap-y-[6px] mb-4">
       <View className="flex flex-row">
@@ -18,11 +25,46 @@ const FormInput = React.forwardRef(function FormInput(
           <Text className="text-[#FF3E6C] text-sm font-semibold">*</Text>
         )}
       </View>
-      <TextInput
-        className="bg-[#EBEBEB] py-[10px] px-[14px] rounded-full text-[#98A2B3] text-sm font-normal"
-        ref={ref}
-        {...props}
-      />
+      {!password && (
+        <TextInput
+          className={`bg-[#EBEBEB] py-[10px] px-[14px] rounded-full text-[#98A2B3] text-sm font-normal`}
+          ref={ref}
+          cursorColor="#6E1FEF"
+          inputMode={
+            inputMode === "email"
+              ? "email"
+              : inputMode === "url"
+                ? "url"
+                : inputMode === "search"
+                  ? "search"
+                  : inputMode === "text"
+                    ? "text"
+                    : inputMode === "tel"
+                      ? "tel"
+                      : "numeric"
+          }
+          {...props}
+        />
+      )}
+      {password && (
+        <TextInput
+          className={`bg-[#EBEBEB] py-[10px] px-[14px] rounded-full text-[#98A2B3] text-sm font-normal ${password && "pr-9"}`}
+          ref={ref}
+          cursorColor="#6E1FEF"
+          secureTextEntry={password ? isVisible : !isVisible}
+          inputMode="text"
+          {...props}
+        />
+      )}
+      {password && (
+        <TouchableOpacity
+          className="absolute right-3 top-1/2"
+          onPress={handlePasswordToogle}
+        >
+          {!isVisible && <EyeSlash size="20" color="#8D8A8A" />}
+          {isVisible && <Eye size="20" color="#8D8A8A" />}
+        </TouchableOpacity>
+      )}
     </View>
   );
 });

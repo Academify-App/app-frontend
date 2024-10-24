@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "expo-router";
 import FormInput from "../FormInput";
 import { Picker } from "@react-native-picker/picker";
+import Checkbox from "expo-checkbox";
 import Button from "@/components/Button";
 
 interface SignInFormData {
@@ -16,18 +17,22 @@ const SignInForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInFormData>();
+  } = useForm<SignInFormData>({ mode: "all" });
+
+  const [isChecked, setIsChecked] = useState<boolean>(false);
 
   return (
     <View className="mt-6">
       <FormInput
         label="Full name"
+        inputMode="text"
         {...register("fullname", { required: true })}
       />
       {errors.fullname && <Text>This field is required</Text>}
 
       <FormInput
         label="Password"
+        password
         {...register("password", { required: true })}
       />
       {errors.password && <Text>This field is required</Text>}
@@ -49,7 +54,13 @@ const SignInForm = () => {
       </View> */}
 
       <View className="mt-1 mb-7 flex flex-row justify-between">
-        <View></View>
+        <View className="flex flex-row items-center justify-center gap-1">
+          <Checkbox
+            value={isChecked}
+            onValueChange={() => setIsChecked(!isChecked)}
+          />
+          <Text className="text-xs text-[#6B6B6B99]">Remember me</Text>
+        </View>
         <Link
           href="/(auth)/ForgotPassword"
           className="text-[#6E1FEF] text-xs font-normal"
@@ -59,7 +70,13 @@ const SignInForm = () => {
       </View>
 
       <View className="flex flex-col gap-y-3">
-        <Button text="Sign In" />
+        <Button
+          text="Sign In"
+          onPress={handleSubmit((data) => {
+            console.log(data);
+            // Perform sign-up logic here
+          })}
+        />
         <View className="flex flex-row gap-x-1 justify-center items-center">
           <Text className="text-xs text-[#333335] font-normal">
             Don’t have an account?{" "}

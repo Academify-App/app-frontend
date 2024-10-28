@@ -30,8 +30,8 @@ const SignInForm = () => {
     console.log(data);
     setTimeout(() => {
       setIsLoading(false);
+      router.push("/(root)/Home");
     }, 2000);
-    // router.push("/(auth)/EmailVerification");
   };
 
   return (

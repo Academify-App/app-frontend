@@ -1,15 +1,9 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-
-interface ButtonProps {
-  text: string;
-  className?: string;
-  textStyle?: string;
-  onPress?: () => void;
-}
+import { TouchableOpacity } from "react-native";
+import { ButtonProps } from "@/types/button.types";
 
 const Button = React.forwardRef(function Button(
-  { text, className, textStyle, onPress, ...props }: ButtonProps,
+  { children, className, onPress, disabled, ...props }: ButtonProps,
   ref
 ) {
   return (
@@ -18,10 +12,9 @@ const Button = React.forwardRef(function Button(
       className={`p-4 w-full rounded-full border flex flex-row justify-center items-center bg-[#2B145A] ${className}`}
       {...props}
       onPress={onPress}
+      disabled={disabled}
     >
-      <Text className={`text-lg text-white font-medium ${textStyle}`}>
-        {text}
-      </Text>
+      {children}
     </TouchableOpacity>
   );
 });

@@ -1,57 +1,115 @@
 import React, { useState } from "react";
 import { View, Text } from "react-native";
-import { useForm } from "react-hook-form";
-import { Link } from "expo-router";
+import { useForm, Controller } from "react-hook-form";
+import { Link, router } from "expo-router";
 import FormInput from "../FormInput";
+import { SignInFormData } from "@/types/auth.types";
 import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
 import Button from "@/components/Button";
-
-interface SignInFormData {
-  fullname: string;
-  password: string;
-}
+import Loader from "@/components/Loader";
 
 const SignInForm = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignInFormData>({ mode: "all" });
+  } = useForm<SignInFormData>({
+    mode: "all",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const onSubmit = (data: SignInFormData) => {
+    setIsLoading(true);
+    // Perform some asynchronous operation
+    console.log(data);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    // router.push("/(auth)/EmailVerification");
+  };
 
   return (
     <View className="mt-6">
-      <FormInput
-        label="Full name"
-        inputMode="text"
-        {...register("fullname", { required: true })}
+      <Controller
+        control={control}
+        rules={{
+          required: "Email is required",
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: "Email address is invalid",
+          },
+        }}
+        name="email"
+        render={({ field: { onChange, value } }) => (
+          <FormInput
+            isRequired
+            label="Email address"
+            inputMode="email"
+            onChange={onChange}
+            value={value}
+          />
+        )}
       />
-      {errors.fullname && <Text>This field is required</Text>}
+      {errors.email && (
+        <Text className="text-[#FF3E6C] -mt-3">{errors.email.message}</Text>
+      )}
 
-      <FormInput
-        label="Password"
-        password
-        {...register("password", { required: true })}
+      <Controller
+        control={control}
+        rules={{
+          required: "Password is required",
+          minLength: {
+            value: 6,
+            message: "Password must be at least 6 characters long",
+          },
+        }}
+        name="password"
+        render={({ field: { onChange, value } }) => (
+          <FormInput
+            isRequired
+            label="Password"
+            password
+            onChange={onChange}
+            value={value}
+          />
+        )}
       />
-      {errors.password && <Text>This field is required</Text>}
+      {errors.password && (
+        <Text className="text-[#FF3E6C] -mt-3">{errors.password.message}</Text>
+      )}
 
-      {/* <View className="flex flex-col gap-y-[6px] mb-5">
-        <View className="flex flex-row">
-          <Text className="text-[#344054] text-sm font-medium">
-            Choose your identity
-          </Text>
-          <Text className="text-[#FF3E6C] text-sm font-semibold">*</Text>
-        </View>
-        <View className="p-0 rounded-full text-[#98A2B3] text-sm font-normal bg-[#EBEBEB]">
-          <Picker {...register("identity", { required: true })}>
-            <Picker.Item label="Student" value="student" />
-            <Picker.Item label="Facilitator" value="facilitator" />
-          </Picker>
-        </View>
-        {errors.fullname && <Text>This field is required</Text>}
-      </View> */}
+      {/* <Controller
+        control={control}
+        rules={{
+          required: "Identity is required",
+        }}
+        name="identity"
+        render={({ field: { onChange, value } }) => (
+          <View className="flex flex-col gap-y-[6px] mb-5">
+            <View className="flex flex-row">
+              <Text className="text-[#344054] text-sm font-medium">
+                Choose your identity
+              </Text>
+              <Text className="text-[#FF3E6C] text-sm font-semibold">*</Text>
+            </View>
+            <View className="p-0 rounded-full text-[#98A2B3] text-sm font-normal bg-[#EBEBEB]">
+              <Picker selectedValue={value} onValueChange={onChange}>
+                <Picker.Item label="Student" value="student" />
+                <Picker.Item label="Facilitator" value="facilitator" />
+              </Picker>
+            </View>
+          </View>
+        )}
+      />
+      {errors.identity && (
+        <Text className="text-[#FF3E6C] -mt-3">{errors.identity.message}</Text>
+      )} */}
 
       <View className="mt-1 mb-7 flex flex-row justify-between">
         <View className="flex flex-row items-center justify-center gap-1">
@@ -70,13 +128,13 @@ const SignInForm = () => {
       </View>
 
       <View className="flex flex-col gap-y-3">
-        <Button
-          text="Sign In"
-          onPress={handleSubmit((data) => {
-            console.log(data);
-            // Perform sign-up logic here
-          })}
-        />
+        <Button onPress={handleSubmit(onSubmit)}>
+          {!isLoading ? (
+            <Text className={`text-lg text-white font-medium`}>Sign In</Text>
+          ) : (
+            <Loader size="small" color="#fff" />
+          )}
+        </Button>
         <View className="flex flex-row gap-x-1 justify-center items-center">
           <Text className="text-xs text-[#333335] font-normal">
             Don’t have an account?{" "}

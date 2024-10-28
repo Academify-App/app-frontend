@@ -1,36 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text } from "react-native";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
+import { ForgotPasswordData } from "@/types/auth.types";
 import FormInput from "../FormInput";
 import Button from "@/components/Button";
-
-interface ForgotPasswordData {
-  email: string;
-}
+import Loader from "@/components/Loader";
+import { router } from "expo-router";
 
 const ForgotPasswordForm = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
-  } = useForm<ForgotPasswordData>({ mode: "all" });
+  } = useForm<ForgotPasswordData>({
+    mode: "all",
+    defaultValues: {
+      email: "",
+    },
+  });
+
+  const onSubmit = (data: ForgotPasswordData) => {
+    setIsLoading(true);
+    // Perform some asynchronous operation
+    console.log(data);
+    const params = {
+      otp: "123",
+      email: data.email,
+      topHeading: "Verify Email",
+      subHeading: "Verify your email address",
+      title: "We sent you 4 digit code to verify your email address",
+    };
+    setTimeout(() => {
+      setIsLoading(false);
+      router.push({
+        pathname: "/(auth)/[otp]",
+        params,
+      });
+    }, 2000);
+  };
   return (
     <View className="mt-6">
-      <FormInput
-        label=""
-        inputMode="email"
-        {...register("email", { required: true })}
+      <Controller
+        control={control}
+        rules={{
+          required: "Email is required",
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: "Email address is invalid",
+          },
+        }}
+        name="email"
+        render={({ field: { onChange, value } }) => (
+          <FormInput
+            isRequired
+            label="Email address"
+            inputMode="email"
+            onChange={onChange}
+            value={value}
+          />
+        )}
       />
-      {errors.email && <Text>This field is required</Text>}
+      {errors.email && (
+        <Text className="text-[#FF3E6C] -mt-3">{errors.email.message}</Text>
+      )}
 
       <View className="flex flex-col gap-y-3">
-        <Button
-          text="Continue"
-          onPress={handleSubmit((data) => {
-            console.log(data);
-            // Perform sign-up logic here
-          })}
-        />
+        <Button onPress={handleSubmit(onSubmit)}>
+          {!isLoading ? (
+            <Text className={`text-lg text-white font-medium`}>Continue</Text>
+          ) : (
+            <Loader size="small" color="#fff" />
+          )}
+        </Button>
       </View>
     </View>
   );

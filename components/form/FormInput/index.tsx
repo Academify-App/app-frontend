@@ -7,10 +7,22 @@ interface FormInputProps {
   isRequired?: boolean;
   password?: boolean;
   inputMode?: string;
+  placeholder?: string;
+  onChange?: () => void;
+  value: string;
 }
 
 const FormInput = React.forwardRef(function FormInput(
-  { label, isRequired, password, inputMode, ...props }: FormInputProps,
+  {
+    label,
+    isRequired,
+    password,
+    inputMode,
+    placeholder,
+    value,
+    onChange,
+    ...props
+  }: FormInputProps,
   ref
 ) {
   const [isVisible, setIsVisible] = React.useState<boolean>(false);
@@ -30,6 +42,10 @@ const FormInput = React.forwardRef(function FormInput(
           className={`bg-[#EBEBEB] py-[10px] px-[14px] rounded-full text-[#98A2B3] text-sm font-normal`}
           ref={ref}
           cursorColor="#6E1FEF"
+          placeholder={placeholder}
+          placeholderTextColor="#98A2B3"
+          onChangeText={onChange}
+          value={value}
           inputMode={
             inputMode === "email"
               ? "email"
@@ -51,8 +67,12 @@ const FormInput = React.forwardRef(function FormInput(
           className={`bg-[#EBEBEB] py-[10px] px-[14px] rounded-full text-[#98A2B3] text-sm font-normal ${password && "pr-9"}`}
           ref={ref}
           cursorColor="#6E1FEF"
-          secureTextEntry={password ? isVisible : !isVisible}
+          secureTextEntry={!password ? isVisible : !isVisible}
           inputMode="text"
+          placeholder={placeholder}
+          placeholderTextColor="#98A2B3"
+          onChangeText={onChange}
+          value={value}
           {...props}
         />
       )}

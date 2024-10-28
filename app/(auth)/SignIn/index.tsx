@@ -21,8 +21,8 @@ const SIgnIn = () => {
         </Text>
         <View className="bg-white w-full h-[770px] px-6 py-7 rounded-t-[30px] flex flex-col gap-y-5">
           <FormHeading
-            title="Create an account"
-            subTitle="To access your dashboard please sign up by entering your correct personal info"
+            title="Welcome Back!"
+            subTitle="To access your dashboard please sign in with your personal info"
           />
           <SignInForm />
           <View className="flex flex-row justify-between items-center gap-x-5">

@@ -5,6 +5,7 @@ const AuthLayout = () => {
   return (
     <Stack>
       <Stack.Screen name="Onboarding/index" options={{ headerShown: false }} />
+      <Stack.Screen name="[otp]" options={{ headerShown: false }} />
       <Stack.Screen name="SignUp/index" options={{ headerShown: false }} />
       <Stack.Screen name="SignIn/index" options={{ headerShown: false }} />
       <Stack.Screen
@@ -16,10 +17,6 @@ const AuthLayout = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="PhoneNumber/index" options={{ headerShown: false }} />
-      <Stack.Screen
-        name="PhoneVerification/index"
-        options={{ headerShown: false }}
-      />
       <Stack.Screen
         name="ResetPassword/index"
         options={{ headerShown: false }}

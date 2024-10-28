@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import React from "react";
 import {
   View,
@@ -21,7 +21,7 @@ const ForgotPassword = () => {
       ></ImageBackground>
       <SafeAreaView className="relative z-10">
         <View className="mt-9 mb-6 mx-6 flex flex-row">
-          <TouchableOpacity className="">
+          <TouchableOpacity className="" onPress={() => router.back()}>
             <ArrowLeft size="24" color="#FFFFFF" />
           </TouchableOpacity>
           <Text className="text-white text-2xl font-medium ml-12">
@@ -41,7 +41,6 @@ const ForgotPassword = () => {
               Kindly enter your email to reset your password{" "}
             </Text>
           </View>
-          {/* <SignUpForm /> */}
           <ForgotPasswordForm />
         </View>
       </SafeAreaView>

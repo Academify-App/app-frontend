@@ -1,37 +1,18 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-unknown-property */
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ArrowLeft } from "iconsax-react-native";
-import { Redirect, router } from "expo-router";
+import { router } from "expo-router";
 import Swiper from "react-native-swiper";
 import { onboarding } from "@/constants";
-import * as SplashScreen from "expo-splash-screen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Onboarding = () => {
   const swiperRef = useRef<Swiper>(null);
   const [currStep, setCurrStep] = useState(0);
   const isLastSlide = currStep === onboarding.length - 1;
-
-  useEffect(() => {
-    const checkFirstTime = async () => {
-      try {
-        const isFirstTime = await AsyncStorage.getItem("isFirstTime");
-        if (isFirstTime !== null) {
-          SplashScreen.hideAsync();
-          router.replace("/(auth)/SignIn");
-        } else {
-          await AsyncStorage.setItem("isFirstTime", "true");
-        }
-      } catch (error) {
-        console.error("Error checking first time launch:", error);
-      }
-    };
-    checkFirstTime();
-  }, []);
 
   return (
     <Swiper

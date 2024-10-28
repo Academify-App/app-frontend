@@ -1,8 +1,8 @@
 import React from "react";
-import { Stack } from "expo-router";
+import { Tabs } from "expo-router";
 import { View, Text } from "react-native";
 
-const HomeLAyout = () => {
+const HomeLayout = () => {
   return (
     <View>
       <Text>Hello, World!</Text>
@@ -10,4 +10,4 @@ const HomeLAyout = () => {
   );
 };
 
-export default HomeLAyout;
+export default HomeLayout;

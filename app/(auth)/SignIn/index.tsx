@@ -2,7 +2,6 @@ import ContinueWithFacebook from "@/components/ContinueWithFacebook";
 import ContinueWithGoogle from "@/components/ContinueWithGoogle";
 import FormHeading from "@/components/form/formHeading";
 import SignInForm from "@/components/form/SignInForm";
-import { Link } from "expo-router";
 import React from "react";
 import { View, Text, ScrollView, ImageBackground } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";

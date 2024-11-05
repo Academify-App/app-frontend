@@ -6,6 +6,7 @@ import { OTPFormData } from "@/types/auth.types";
 import Button from "@/components/Button";
 import Loader from "@/components/Loader";
 import { router } from "expo-router";
+import CountDownTimer from "@/components/CountDownTimer";
 
 const EmailVerificationForm = () => {
   const OTPRef = useRef<OTPTextInputHandle | null>(null);
@@ -72,9 +73,7 @@ const EmailVerificationForm = () => {
       </View>
       <View className="mt-2 flex flex-row justify-center">
         <Text className="text-sm text-center font-medium">Expires in </Text>
-        <Text className="text-sm text-center text-[#491B6D] font-medium">
-          01:00
-        </Text>
+        <CountDownTimer />
       </View>
       <Button className="mt-9" onPress={handleSubmit(onSubmit)}>
         {!isLoading ? (

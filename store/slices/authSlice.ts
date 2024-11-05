@@ -8,13 +8,15 @@ import {
   EmailVerification,
   OTPFormData,
 } from "@/types/auth.types";
-import { Zel } from "iconsax-react-native";
+import { AxiosError } from "axios";
+// import { Zel } from "iconsax-react-native";
 
 const initialState: AuthState = {
   user: null,
   token: null,
   isLoading: false,
   error: null,
+  isAuthenticated: false,
 };
 
 export const login = createAsyncThunk(
@@ -22,10 +24,15 @@ export const login = createAsyncThunk(
   async (data: SignInFormData, { rejectWithValue }) => {
     try {
       const response = await api.post("/api/login", data);
-      await AsyncStorage.setItem("token", response.data.token);
+      if (response && response.data && response.data.token) {
+        await AsyncStorage.setItem("token", response.data.token);
+      }
+      // console.log(response.data);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      const err = error as AxiosError;
+      console.log("error:", err.message);
+      return rejectWithValue(err.message || "An error occured");
     }
   },
 );
@@ -34,11 +41,14 @@ export const register = createAsyncThunk(
   "auth/register",
   async (data: SignUpFormData, { rejectWithValue }) => {
     try {
+      console.log(data);
       const response = await api.post("/api/register", data);
       await AsyncStorage.setItem("token", response.data.token);
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error);
+    } catch (error: any) {
+      const err = error as AxiosError;
+      console.log("error:", err.message);
+      return rejectWithValue(err.message || "An error occured");
     }
   },
 );
@@ -50,7 +60,8 @@ export const emailVerification = createAsyncThunk(
       const response = await api.post("/api/send-otp", data);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      const err = error as AxiosError;
+      return rejectWithValue(err.response?.data || "An error occured");
     }
   },
 );
@@ -62,21 +73,29 @@ export const otp = createAsyncThunk(
       const response = await api.post("/api/verify-otp", data);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error);
+      const err = error as AxiosError;
+      return rejectWithValue(err.response?.data || "An error occured");
     }
   },
 );
 
-export const logout = createAsyncThunk("auth/logout", async () => {
-  await AsyncStorage.removeItem("token");
-});
-
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
+      state.token = null;
+      AsyncStorage.removeItem("token");
+    },
+    clearError: (state) => {
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
+      // login cases
       .addCase(login.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -90,6 +109,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
+      // register cases
       .addCase(register.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -103,6 +123,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
+      // email verification cases
       .addCase(emailVerification.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -116,6 +137,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload as string;
       })
+      // otp cases
       .addCase(otp.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -128,12 +150,9 @@ const authSlice = createSlice({
       .addCase(otp.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload as string;
-      })
-      .addCase(logout.fulfilled, (state) => {
-        state.user = null;
-        state.token = null;
       });
   },
 });
 
+export const { logout, clearError } = authSlice.actions;
 export default authSlice.reducer;

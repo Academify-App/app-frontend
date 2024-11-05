@@ -6,9 +6,13 @@ import FormInput from "../FormInput";
 import Button from "@/components/Button";
 import Loader from "@/components/Loader";
 import { router } from "expo-router";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { showError, showSuccess } from "@/utils/alert";
+import { register, emailVerification } from "@/store/slices/authSlice";
 
 const ForgotPasswordForm = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const { isLoading, error } = useAppSelector((state) => state.auth);
   const {
     control,
     handleSubmit,
@@ -21,7 +25,6 @@ const ForgotPasswordForm = () => {
   });
 
   const onSubmit = (data: ForgotPasswordData) => {
-    setIsLoading(true);
     // Perform some asynchronous operation
     console.log(data);
     const params = {
@@ -32,7 +35,6 @@ const ForgotPasswordForm = () => {
       title: "We sent you 4 digit code to verify your email address",
     };
     setTimeout(() => {
-      setIsLoading(false);
       router.push({
         pathname: "/(auth)/[otp]",
         params,

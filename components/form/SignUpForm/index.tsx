@@ -7,9 +7,26 @@ import FormInput from "../FormInput";
 import { Picker } from "@react-native-picker/picker";
 import Button from "@/components/Button";
 import Loader from "@/components/Loader";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { showError, showSuccess } from "@/utils/alert";
+import { register, emailVerification } from "@/store/slices/authSlice";
+
+// {
+//   "name": "John Doe",
+//   "email": "frankjoe261@outlook.com",
+//   "password_hash": "$2a$10$xDSQ/epJ8yl9CfzIBTmfuOjQKiFMDgpfM1rkUVw8jT6AkUHxnBVg2",
+//   "identity": "student",
+//   "otp": null,
+//   "otp_expires_at": null,
+//   "id": 2,
+//   "is_active": false,
+//   "created_at": "2024-10-30T17:02:02.540Z",
+//   "updated_at": "2024-10-30T17:02:02.540Z"
+// }
 
 const SignUpForm = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const { isLoading, error } = useAppSelector((state) => state.auth);
   const {
     control,
     handleSubmit,
@@ -17,31 +34,37 @@ const SignUpForm = () => {
   } = useForm<SignUpFormData>({
     mode: "all",
     defaultValues: {
-      fullname: "",
+      name: "",
       email: "",
       password: "",
-      identity: "student",
+      identity: "user",
     },
   });
 
-  const onSubmit = (data: SignUpFormData) => {
-    setIsLoading(true);
+  const onSubmit = async (data: SignUpFormData) => {
     // Perform some asynchronous operation
+    const emailVerify = { email: data.email };
     const params = {
       otp: "123",
-      email: data.email,
+      email: emailVerify.email,
       topHeading: "Email Verification",
       subHeading: "Verify your email address",
       title: "We sent you 4 digit code to verify your email address",
     };
-    console.log(data);
-    setTimeout(() => {
-      setIsLoading(false);
+    // console.log(data);
+    // setTimeout(() => {
+    // }, 2000);
+    try {
+      const response = await dispatch(register(data)).unwrap();
+      showSuccess(`${response.payload}`);
+      await dispatch(emailVerification(emailVerify)).unwrap();
       router.push({
         pathname: "/(auth)/[otp]",
         params,
       });
-    }, 2000);
+    } catch (error) {
+      showError(`${error}`);
+    }
   };
 
   return (
@@ -55,7 +78,7 @@ const SignUpForm = () => {
             message: "Name must be at least 2 characters",
           },
         }}
-        name="fullname"
+        name="name"
         render={({ field: { onChange, value } }) => (
           <FormInput
             isRequired
@@ -66,8 +89,8 @@ const SignUpForm = () => {
           />
         )}
       />
-      {errors.fullname && (
-        <Text className="text-[#FF3E6C] -mt-3">{errors.fullname.message}</Text>
+      {errors.name && (
+        <Text className="text-[#FF3E6C] -mt-3">{errors.name.message}</Text>
       )}
 
       <Controller
@@ -134,7 +157,8 @@ const SignUpForm = () => {
             </View>
             <View className="p-0 rounded-full text-[#98A2B3] text-sm font-normal bg-[#EBEBEB]">
               <Picker selectedValue={value} onValueChange={onChange}>
-                <Picker.Item label="Student" value="student" />
+                <Picker.Item label="Select Identity" value="" />
+                <Picker.Item label="Student" value="user" />
                 <Picker.Item label="Facilitator" value="facilitator" />
               </Picker>
             </View>

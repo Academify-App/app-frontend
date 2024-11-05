@@ -1,17 +1,22 @@
+/* eslint-disable no-unused-expressions */
 import React, { useState } from "react";
 import { View, Text } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import { Link, router } from "expo-router";
 import FormInput from "../FormInput";
 import { SignInFormData } from "@/types/auth.types";
-import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
 import Button from "@/components/Button";
 import Loader from "@/components/Loader";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
+import { showError, showSuccess } from "@/utils/alert";
+import { login } from "@/store/slices/authSlice";
 
 const SignInForm = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector((state) => state.auth);
   const [isChecked, setIsChecked] = useState<boolean>(false);
+
   const {
     control,
     handleSubmit,
@@ -24,14 +29,19 @@ const SignInForm = () => {
     },
   });
 
-  const onSubmit = (data: SignInFormData) => {
-    setIsLoading(true);
+  const onSubmit = async (data: SignInFormData) => {
     // Perform some asynchronous operation
-    console.log(data);
-    setTimeout(() => {
-      setIsLoading(false);
-      router.replace("/(root)/Home");
-    }, 2000);
+    try {
+      const result = await dispatch(login(data)).unwrap();
+      showSuccess(`Login Successful`);
+      setTimeout(() => {
+        result.user.identity === "facilitator"
+          ? router.replace("/(root)/(facilitator)/Dashboard")
+          : router.replace("/(root)/(student)/Home");
+      }, 2000);
+    } catch (error) {
+      showError(`${error}`);
+    }
   };
 
   return (
@@ -129,10 +139,10 @@ const SignInForm = () => {
 
       <View className="flex flex-col gap-y-3">
         <Button onPress={handleSubmit(onSubmit)}>
-          {!isLoading ? (
-            <Text className={`text-lg text-white font-medium`}>Sign In</Text>
-          ) : (
+          {isLoading ? (
             <Loader size="small" color="#fff" />
+          ) : (
+            <Text className={`text-lg text-white font-medium`}>Sign In</Text>
           )}
         </Button>
         <View className="flex flex-row gap-x-1 justify-center items-center">

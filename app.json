@@ -13,13 +13,19 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "usesCleartextTraffic": true
     },
     "web": {
       "bundler": "metro",
@@ -32,6 +38,9 @@
     },
     "packagerOpts": {
       "config": "metro.config.js"
+    },
+    "extra": {
+      "API_URL": "process.env.API_URL"
     }
   }
 }

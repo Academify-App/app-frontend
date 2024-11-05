@@ -1,10 +1,14 @@
-import { API_Url } from "@env";
+// import Constants from "expo-constants";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+// import { API_URL } from "@env";
+
+// const API_URL = Constants.manifest2?.extra?.API_URL;
 
 const api = axios.create({
-  baseURL: API_Url,
+  baseURL: process.env.EXPO_PUBLIC_API_URL,
   headers: {
+    Accept: "application/json",
     "Content-Type": "application/json",
   },
 });

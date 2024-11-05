@@ -1,11 +1,12 @@
+export type UserRole = "user" | "facilitator";
 export interface SignInFormData {
   email: string;
   password: string;
 }
 
 export interface SignUpFormData extends SignInFormData {
-  fullname: string;
-  identity: "student" | "facilitator";
+  name: string;
+  identity: UserRole;
 }
 
 export interface ForgotPasswordData {
@@ -33,6 +34,7 @@ export interface User {
   id: string;
   email: string;
   username: string;
+  identity: UserRole;
 }
 
 export interface AuthState {
@@ -40,4 +42,5 @@ export interface AuthState {
   token: string | null;
   isLoading: boolean;
   error: string | null;
+  isAuthenticated: boolean;
 }

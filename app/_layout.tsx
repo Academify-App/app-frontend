@@ -15,9 +15,29 @@ import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
 import "@/global.css";
+import { Provider } from "react-redux";
+import { store, RootState } from "@/store";
+import { useAppSelector } from "@/store/hooks";
+import FlashMessage from "react-native-flash-message";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+// app navigation
+const AppNavigation = () => {
+  const { isAuthenticated } = useAppSelector((state: RootState) => state.auth);
+  return (
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      {!isAuthenticated ? (
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      ) : (
+        <Stack.Screen name="(root)" options={{ headerShown: false }} />
+      )}
+      <Stack.Screen name="+not-found" />
+    </Stack>
+  );
+};
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -37,11 +57,9 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack>
-      <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-      <Stack.Screen name="(root)" options={{ headerShown: false }} />
-      <Stack.Screen name="+not-found" />
-    </Stack>
+    <Provider store={store}>
+      <AppNavigation />
+      <FlashMessage position="top" />
+    </Provider>
   );
 }

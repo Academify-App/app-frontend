@@ -1,12 +1,6 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import {
-  Book,
-  Wallet2,
-  ChartSquare,
-  User,
-  Element3,
-} from "iconsax-react-native";
+import { Book, Wallet2, User, Element3, AddCircle } from "iconsax-react-native";
 
 const FacilitatorLayout = () => {
   return (
@@ -16,23 +10,6 @@ const FacilitatorLayout = () => {
         options={{
           title: "Dashboard",
           tabBarIcon: ({ color }) => <Element3 size={24} color={color} />,
-          headerShown: false,
-          tabBarStyle: {
-            paddingTop: 10,
-            paddingBottom: 10,
-            height: 60,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          },
-        }}
-      />
-      <Tabs.Screen
-        name="AddCourse/index"
-        options={{
-          title: "Add Course",
-          tabBarIcon: ({ color }) => <Book size={24} color={color} />,
           headerShown: false,
           tabBarStyle: {
             paddingTop: 10,
@@ -63,10 +40,27 @@ const FacilitatorLayout = () => {
         }}
       />
       <Tabs.Screen
+        name="AddCourse/index"
+        options={{
+          title: "Add Course",
+          tabBarIcon: ({ color }) => <AddCircle size={24} color={color} />,
+          headerShown: false,
+          tabBarStyle: {
+            paddingTop: 10,
+            paddingBottom: 10,
+            height: 60,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          },
+        }}
+      />
+      <Tabs.Screen
         name="MyCourses/index"
         options={{
           title: "My Courses",
-          tabBarIcon: ({ color }) => <ChartSquare size={24} color={color} />,
+          tabBarIcon: ({ color }) => <Book size={24} color={color} />,
           headerShown: false,
           tabBarStyle: {
             paddingTop: 10,
@@ -101,3 +95,4 @@ const FacilitatorLayout = () => {
 };
 
 export default FacilitatorLayout;
+// 76468267

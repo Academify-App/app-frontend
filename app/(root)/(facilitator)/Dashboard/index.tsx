@@ -161,128 +161,142 @@ const Dashboard = () => {
               </View>
               <View className="flex flex-row flex-wrap justify-center items-center gap-[10px] mb-1">
                 <Card className="border-0 w-[46.5%] shadow-[0px_0px_6px_0px_rgba(0, 0, 0, 0.02)_0px_2px_4px_0px_rgba(0, 0, 0, 0.08)] bg-[#250F53]">
-                  <View>
-                    <Text className="text-[#F4EEFF] text-xs font-semibold mb-2">
-                      Total PDF Upload
-                    </Text>
-                    <Text className="text-[#F4EEFF] text-2xl font-semibold mb-5">
-                      102
-                    </Text>
-                    <View className="flex flex-row justify-between items-end">
-                      <View className="flex flex-row items-center gap-x-[7px]">
-                        <View className="w-[22px] h-[22px] rounded-full bg-[#0F2C20] flex flex-row justify-center items-center rotate-45">
-                          <ArrowUp size="12" color="#2BA053" />
+                  <TouchableOpacity
+                    onPress={() => router.push("/(facilitator)/MyCourses")}
+                  >
+                    <View>
+                      <Text className="text-[#F4EEFF] text-xs font-semibold mb-2">
+                        Total PDF Upload
+                      </Text>
+                      <Text className="text-[#F4EEFF] text-2xl font-semibold mb-5">
+                        102
+                      </Text>
+                      <View className="flex flex-row justify-between items-end">
+                        <View className="flex flex-row items-center gap-x-[7px]">
+                          <View className="w-[22px] h-[22px] rounded-full bg-[#0F2C20] flex flex-row justify-center items-center rotate-45">
+                            <ArrowUp size="12" color="#2BA053" />
+                          </View>
+                          <Text className="text-[#2BA053] text-xs font-semibold">
+                            +50.7%
+                          </Text>
                         </View>
-                        <Text className="text-[#2BA053] text-xs font-semibold">
-                          +50.7%
-                        </Text>
-                      </View>
-                      <View>
-                        <PieChart
-                          donut
-                          innerRadius={13}
-                          radius={16}
-                          data={totalPdfData}
-                          centerLabelComponent={() => {
-                            return <Text className="text-[10px]">20%</Text>;
-                          }}
-                        />
+                        <View>
+                          <PieChart
+                            donut
+                            innerRadius={13}
+                            radius={16}
+                            data={totalPdfData}
+                            centerLabelComponent={() => {
+                              return <Text className="text-[10px]">20%</Text>;
+                            }}
+                          />
+                        </View>
                       </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 </Card>
                 <Card className="border w-[46.5%] shadow-[0px_0px_6px_0px_rgba(0, 0, 0, 0.02)_0px_2px_4px_0px_rgba(0, 0, 0, 0.08)]">
-                  <View>
-                    <Text className="text-[#242424] text-xs font-semibold mb-2">
-                      Total Video Upload
-                    </Text>
-                    <Text className="text-[#242424] text-2xl font-semibold mb-5">
-                      60
-                    </Text>
-                    <View className="flex flex-row justify-between items-end">
-                      <View className="flex flex-row items-center gap-x-[7px]">
-                        <View className="w-[22px] h-[22px] rounded-full bg-[#CCEDD8] flex flex-row justify-center items-center rotate-45">
-                          <ArrowUp size="12" color="#2BA053" />
+                  <TouchableOpacity
+                    onPress={() => router.push("/(facilitator)/MyCourses")}
+                  >
+                    <View>
+                      <Text className="text-[#242424] text-xs font-semibold mb-2">
+                        Total Video Upload
+                      </Text>
+                      <Text className="text-[#242424] text-2xl font-semibold mb-5">
+                        60
+                      </Text>
+                      <View className="flex flex-row justify-between items-end">
+                        <View className="flex flex-row items-center gap-x-[7px]">
+                          <View className="w-[22px] h-[22px] rounded-full bg-[#CCEDD8] flex flex-row justify-center items-center rotate-45">
+                            <ArrowUp size="12" color="#2BA053" />
+                          </View>
+                          <Text className="text-[#2BA053] text-xs font-semibold">
+                            +9.23%
+                          </Text>
                         </View>
-                        <Text className="text-[#2BA053] text-xs font-semibold">
-                          +9.23%
-                        </Text>
-                      </View>
-                      <View>
-                        <PieChart
-                          donut
-                          innerRadius={13}
-                          radius={16}
-                          data={totalVideoData}
-                          centerLabelComponent={() => {
-                            return <Text className="text-[10px]">36%</Text>;
-                          }}
-                        />
+                        <View>
+                          <PieChart
+                            donut
+                            innerRadius={13}
+                            radius={16}
+                            data={totalVideoData}
+                            centerLabelComponent={() => {
+                              return <Text className="text-[10px]">36%</Text>;
+                            }}
+                          />
+                        </View>
                       </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 </Card>
                 <Card className="border w-[46.5%] shadow-[0px_0px_6px_0px_rgba(0, 0, 0, 0.02)_0px_2px_4px_0px_rgba(0, 0, 0, 0.08)]">
-                  <View>
-                    <Text className="text-[#242424] text-xs font-semibold mb-2">
-                      Purchased Resources
-                    </Text>
-                    <Text className="text-[#242424] text-2xl font-semibold mb-5">
-                      47
-                    </Text>
-                    <View className="flex flex-row justify-between items-end">
-                      <View className="flex flex-row items-center gap-x-[7px]">
-                        <View className="w-[22px] h-[22px] rounded-full bg-[#CCEDD8] flex flex-row justify-center items-center rotate-45">
-                          <ArrowUp size="12" color="#2BA053" />
+                  <TouchableOpacity>
+                    <View>
+                      <Text className="text-[#242424] text-xs font-semibold mb-2">
+                        Purchased Resources
+                      </Text>
+                      <Text className="text-[#242424] text-2xl font-semibold mb-5">
+                        47
+                      </Text>
+                      <View className="flex flex-row justify-between items-end">
+                        <View className="flex flex-row items-center gap-x-[7px]">
+                          <View className="w-[22px] h-[22px] rounded-full bg-[#CCEDD8] flex flex-row justify-center items-center rotate-45">
+                            <ArrowUp size="12" color="#2BA053" />
+                          </View>
+                          <Text className="text-[#2BA053] text-xs font-semibold">
+                            +18.07%
+                          </Text>
                         </View>
-                        <Text className="text-[#2BA053] text-xs font-semibold">
-                          +18.07%
-                        </Text>
-                      </View>
-                      <View>
-                        <PieChart
-                          donut
-                          innerRadius={13}
-                          radius={16}
-                          data={purResData}
-                          centerLabelComponent={() => {
-                            return <Text className="text-[10px]">28%</Text>;
-                          }}
-                        />
+                        <View>
+                          <PieChart
+                            donut
+                            innerRadius={13}
+                            radius={16}
+                            data={purResData}
+                            centerLabelComponent={() => {
+                              return <Text className="text-[10px]">28%</Text>;
+                            }}
+                          />
+                        </View>
                       </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 </Card>
                 <Card className="border w-[46.5%] shadow-[0px_0px_6px_0px_rgba(0, 0, 0, 0.02)_0px_2px_4px_0px_rgba(0, 0, 0, 0.08)]">
-                  <View>
-                    <Text className="text-[#242424] text-xs font-semibold mb-2">
-                      Registered Students
-                    </Text>
-                    <Text className="text-[#242424] text-2xl font-semibold mb-5">
-                      124
-                    </Text>
-                    <View className="flex flex-row justify-between items-end">
-                      <View className="flex flex-row items-center gap-x-[7px]">
-                        <View className="w-[22px] h-[22px] rounded-full bg-[#CCEDD8] flex flex-row justify-center items-center rotate-45">
-                          <ArrowUp size="12" color="#2BA053" />
+                  <TouchableOpacity
+                    onPress={() => router.push("/(facilitator)/MyCourses")}
+                  >
+                    <View>
+                      <Text className="text-[#242424] text-xs font-semibold mb-2">
+                        Registered Students
+                      </Text>
+                      <Text className="text-[#242424] text-2xl font-semibold mb-5">
+                        124
+                      </Text>
+                      <View className="flex flex-row justify-between items-end">
+                        <View className="flex flex-row items-center gap-x-[7px]">
+                          <View className="w-[22px] h-[22px] rounded-full bg-[#CCEDD8] flex flex-row justify-center items-center rotate-45">
+                            <ArrowUp size="12" color="#2BA053" />
+                          </View>
+                          <Text className="text-[#2BA053] text-xs font-semibold">
+                            +65%
+                          </Text>
                         </View>
-                        <Text className="text-[#2BA053] text-xs font-semibold">
-                          +65%
-                        </Text>
-                      </View>
-                      <View>
-                        <PieChart
-                          donut
-                          innerRadius={13}
-                          radius={16}
-                          data={regStuData}
-                          centerLabelComponent={() => {
-                            return <Text className="text-[10px]">31%</Text>;
-                          }}
-                        />
+                        <View>
+                          <PieChart
+                            donut
+                            innerRadius={13}
+                            radius={16}
+                            data={regStuData}
+                            centerLabelComponent={() => {
+                              return <Text className="text-[10px]">31%</Text>;
+                            }}
+                          />
+                        </View>
                       </View>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 </Card>
               </View>
               <Card>

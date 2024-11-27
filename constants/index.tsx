@@ -1,3 +1,5 @@
+import { AddCircle, Maximize, Edit, Trash } from "iconsax-react-native";
+
 export const onboarding = [
   {
     id: 1,
@@ -108,3 +110,30 @@ export const stackedBarData = [
 ];
 
 export const yAxisLabel = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+
+export const DashboardBottomSheetData = [
+  {
+    id: 1,
+    title: "Create Course",
+    link: "/(facilitator)/AddCourse",
+    icon: <AddCircle size="18" color="#464646" />,
+  },
+  {
+    id: 2,
+    title: "View Course",
+    link: "/(facilitator)/AddCourse",
+    icon: <Maximize size="18" color="#464646" />,
+  },
+  {
+    id: 3,
+    title: "Edit Course",
+    link: "/(facilitator)/AddCourse",
+    icon: <Edit size="18" color="#464646" />,
+  },
+  {
+    id: 4,
+    title: "Delete Course",
+    link: "/(facilitator)/AddCourse",
+    icon: <Trash size="18" color="#464646" />,
+  },
+];

@@ -19,6 +19,7 @@ import { Provider } from "react-redux";
 import { store, RootState } from "@/store";
 import { useAppSelector } from "@/store/hooks";
 import FlashMessage from "react-native-flash-message";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -58,8 +59,10 @@ export default function RootLayout() {
 
   return (
     <Provider store={store}>
-      <AppNavigation />
-      <FlashMessage position="top" />
+      <GestureHandlerRootView className="flex-1">
+        <AppNavigation />
+        <FlashMessage position="top" />
+      </GestureHandlerRootView>
     </Provider>
   );
 }

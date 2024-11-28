@@ -1,4 +1,3 @@
-import { AddCourseFormData } from './addCourse.types';
 export interface AddCourseFormData {
   category: string;
   numOfPages: number;

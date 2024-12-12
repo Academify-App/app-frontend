@@ -137,3 +137,10 @@ export const DashboardBottomSheetData = [
     icon: <Trash size="18" color="#464646" />,
   },
 ];
+
+export const MaterialType = [
+  { label: "Handout(PDF)", value: "pdf" },
+  { label: "Tutorial Videos", value: "video" },
+  { label: "Projects", value: "project" },
+  { label: "Book", value: "book" },
+];

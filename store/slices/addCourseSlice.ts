@@ -3,17 +3,17 @@ import { AddCourseFormState, AddCourseFormData } from "@/types/addCourse.types";
 
 const initialState: AddCourseFormState = {
   formData: {
-    category: "",
-    numOfPages: 0,
+    category: null,
+    numberOfPages: 0,
     department: "",
     level: "",
     title: "",
     description: "",
     price: 0,
-    url: "",
-    coverUrl: "",
+    url: null,
+    coverUrl: null,
   },
-  currStep: "1",
+  currStep: 1,
   isSubmitting: false,
   error: null,
   success: false,
@@ -23,9 +23,18 @@ const addCourseSlice = createSlice({
   name: "addCourse",
   initialState,
   reducers: {
+    selectedCategory: (state, action: PayloadAction<string>) => {
+      state.formData.category = action.payload;
+    },
+    updateCoverUrl: (
+      state,
+      action: PayloadAction<AddCourseFormData["coverUrl"]>
+    ) => {
+      state.formData.coverUrl = action.payload;
+    },
     updateFormData: (
       state,
-      action: PayloadAction<Partial<AddCourseFormData>>,
+      action: PayloadAction<Partial<AddCourseFormData>>
     ) => {
       state.formData = {
         ...state.formData,
@@ -34,19 +43,19 @@ const addCourseSlice = createSlice({
     },
     setFormData: (
       state,
-      action: PayloadAction<AddCourseFormState["formData"]>,
+      action: PayloadAction<AddCourseFormState["formData"]>
     ) => {
       state.formData = action.payload;
     },
     setCurrStep: (
       state,
-      action: PayloadAction<AddCourseFormState["currStep"]>,
+      action: PayloadAction<AddCourseFormState["currStep"]>
     ) => {
       state.currStep = action.payload;
     },
     setIsSubmitting: (
       state,
-      action: PayloadAction<AddCourseFormState["isSubmitting"]>,
+      action: PayloadAction<AddCourseFormState["isSubmitting"]>
     ) => {
       state.isSubmitting = action.payload;
     },
@@ -55,7 +64,7 @@ const addCourseSlice = createSlice({
     },
     setSuccess: (
       state,
-      action: PayloadAction<AddCourseFormState["success"]>,
+      action: PayloadAction<AddCourseFormState["success"]>
     ) => {
       state.success = action.payload;
     },
@@ -73,5 +82,7 @@ export const {
   setError,
   setSuccess,
   resetForm,
+  selectedCategory,
+  updateCoverUrl,
 } = addCourseSlice.actions;
 export default addCourseSlice.reducer;

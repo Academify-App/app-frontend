@@ -1,18 +1,24 @@
 export interface AddCourseFormData {
-  category: string;
-  numOfPages: number;
+  category: string | null;
+  numberOfPages: number;
   department: string;
   level: string;
   title: string;
   description: string;
   price: number;
-  url: string;
-  coverUrl: string;
+  url: {
+    uri: string;
+    name: string;
+  } | null;
+  coverUrl: {
+    uri: string;
+    name: string;
+  } | null;
 }
 
 export interface AddCourseFormState {
   formData: AddCourseFormData;
-  currStep: string;
+  currStep: number;
   isSubmitting: boolean;
   error: string | null;
   success: boolean;

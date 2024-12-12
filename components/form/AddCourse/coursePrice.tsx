@@ -4,7 +4,7 @@ import { View, Text } from "react-native";
 const CoursePrice = () => {
   return (
     <View>
-      <Text>Hello, World!</Text>
+      <Text>course price!</Text>
     </View>
   );
 };

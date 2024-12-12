@@ -43,7 +43,7 @@ export const register = createAsyncThunk(
     try {
       console.log(data);
       const response = await api.post("/api/register", data);
-      await AsyncStorage.setItem("token", response.data.token);
+      // await AsyncStorage.setItem("token", response.data.token);
       return response.data;
     } catch (error: any) {
       const err = error as AxiosError;

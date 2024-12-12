@@ -4,7 +4,7 @@ import { View, Text } from "react-native";
 const CoursePreview = () => {
   return (
     <View>
-      <Text>Hello, World!</Text>
+      <Text>course preview!</Text>
     </View>
   );
 };

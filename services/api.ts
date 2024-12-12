@@ -18,6 +18,8 @@ api.interceptors.request.use(
     const token = await AsyncStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    } else {
+      await AsyncStorage.removeItem("token");
     }
     return config;
   },

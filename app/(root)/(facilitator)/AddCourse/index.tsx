@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
-import { UseAppDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import {
   updateFormData,
@@ -14,7 +14,7 @@ import {
   setSuccess,
 } from "@/store/slices/addCourseSlice";
 import { useForm } from "react-hook-form";
-import { Lock, ArrowLeft } from "iconsax-react-native";
+import { ArrowLeft } from "iconsax-react-native";
 import Button from "@/components/Button";
 import CourseDepartmentForm from "@/components/form/AddCourse/courseDepartment";
 import CourseTitleForm from "@/components/form/AddCourse/courseTitle";
@@ -25,9 +25,9 @@ import CoursePreview from "@/components/form/AddCourse/coursePreview";
 import CoursePrice from "@/components/form/AddCourse/coursePrice";
 
 const AddCourse = () => {
-  const dispatch = UseAppDispatch();
+  const dispatch = useDispatch();
   const { formData, currStep, isSubmitting, error, success } = useSelector(
-    (state: RootState) => state.addCourse,
+    (state: RootState) => state.addCourse
   );
   const {
     register,
@@ -40,21 +40,33 @@ const AddCourse = () => {
     <SafeAreaView>
       <ScrollView>
         <View className="w-full py-4 px-6 flex flex-row gap-x-5 items-center">
-          <Button isDefault onPress={() => router.back()}>
-            <ArrowLeft size={24} color="#323232" />
-          </Button>
-          <Text className="text-2xl font-semibold text-[#323232]">
-            Post your material
-          </Text>
+          {currStep <= 1 && (
+            <Button isDefault onPress={() => router.back()}>
+              <ArrowLeft size={24} color="#323232" />
+            </Button>
+          )}
+          {currStep > 1 && (
+            <Button
+              isDefault
+              onPress={() => dispatch(setCurrStep(currStep - 1))}
+            >
+              <ArrowLeft size={24} color="#323232" />
+            </Button>
+          )}
+          {currStep === 1 && (
+            <Text className="text-2xl font-semibold text-[#323232]">
+              Post your material
+            </Text>
+          )}
         </View>
-        <View className="w-full h-screen flex flex-col justify-center items-center">
-          <Lock size={24} color="#6E1FEF" />
-          <Text>Add Courses Coming Soon!</Text>
-        </View>
-        <View className="flex flex-row justify-center items-center fixed bottom-0">
-          <Button className="w-11/12">
-            <Text className="text-white text-lg font-medium">Next</Text>
-          </Button>
+        <View className="w-full flex flex-col justify-center items-center">
+          {currStep === 1 && <CategoryForm />}
+          {currStep === 2 && <CoverPhotoForm />}
+          {currStep === 3 && <CourseDepartmentForm />}
+          {currStep === 4 && <CourseTitleForm />}
+          {currStep === 5 && <CourseDescriptionForm />}
+          {currStep === 6 && <CoursePrice />}
+          {currStep === 7 && <CoursePreview />}
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -4,7 +4,7 @@ import { View, Text } from "react-native";
 const CourseDepartmentForm = () => {
   return (
     <View>
-      <Text>Hello, World!</Text>
+      <Text>course department!</Text>
     </View>
   );
 };

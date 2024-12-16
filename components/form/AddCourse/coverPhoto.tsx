@@ -1,15 +1,14 @@
 import React from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import Button from "@/components/Button";
 import ProgressBar from "@/components/ProgressBar";
 import { useForm, useController } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectedCategory,
   setCurrStep,
-  setIsSubmitting,
   setError,
+  updateFormData,
 } from "@/store/slices/addCourseSlice";
 import { RootState } from "@/store";
 import { showError } from "@/utils/alert";
@@ -20,12 +19,12 @@ const CoverPhotoForm = () => {
   const { coverUrl, url } = useSelector(
     (state: RootState) => state.addCourse.formData
   );
-  console.log(coverUrl, url);
+  // console.log(coverUrl, url);
   const currStep = useSelector((state: RootState) => state.addCourse.currStep);
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      coverUrl: null,
-      url: null,
+      coverUrl: coverUrl,
+      url: url,
     },
   });
   const { field: urlField } = useController({
@@ -38,6 +37,7 @@ const CoverPhotoForm = () => {
     control,
   });
 
+  // selsct document or tutorial function
   const handleUrlSelection = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
@@ -45,7 +45,14 @@ const CoverPhotoForm = () => {
           "application/pdf",
           "application/msword",
           "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          "application/vnd.oasis.opendocument.text",
+          "text/plain",
+          "application/vnd.oasis.opendocument.presentation",
+          "application/video.mp4",
+          "application/video.mpeg",
+          "application/video.mov",
         ],
+        copyToCacheDirectory: true,
       });
 
       if (result.assets && result.assets[0].uri) {
@@ -53,16 +60,25 @@ const CoverPhotoForm = () => {
           uri: result.assets[0].uri,
           name: result.assets[0].name,
         });
+        dispatch(
+          updateFormData({
+            url: {
+              uri: result.assets[0].uri,
+              name: result.assets[0].name,
+            },
+          }),
+        );
       } else {
-        showError(`${dispatch(setError("Please select a file"))}`);
+        console.log(setError("Please select a file"));
       }
     } catch (error) {
       // Ignore errors
       console.log(error);
-      showError(`${dispatch(setError("Error selecting document"))}`);
+      console.log(setError("Error selecting document"));
     }
   };
 
+  // selsct cover photo function
   const handleCoverUrlSelection = async () => {
     try {
       const result = await DocumentPicker.getDocumentAsync({
@@ -73,6 +89,14 @@ const CoverPhotoForm = () => {
           uri: result.assets[0].uri,
           name: result.assets[0].name,
         });
+        dispatch(
+          updateFormData({
+            coverUrl: {
+              uri: result.assets[0].uri,
+              name: result.assets[0].name,
+            },
+          }),
+        );
       } else {
         console.log("Please select a file");
       }
@@ -84,7 +108,7 @@ const CoverPhotoForm = () => {
   };
 
   const onSubmit = (data: any) => {
-    console.log(data, url?.name, coverUrl?.name);
+    console.log(data);
     dispatch(setCurrStep(currStep + 1));
   };
 
@@ -124,6 +148,10 @@ const CoverPhotoForm = () => {
         >
           {coverUrlField.value ? (
             <View className="flex flex-row justify-center items-center gap-x-6 ">
+              <Image
+                source={{ uri: coverUrlField.value.uri }}
+                className="w-20 h-20 ml-2 rounded"
+              />
               <Text className="text-base text-[#323232] font-semibold">
                 {coverUrlField.value && coverUrlField.value.name}
               </Text>

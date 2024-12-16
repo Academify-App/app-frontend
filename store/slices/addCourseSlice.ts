@@ -26,12 +26,6 @@ const addCourseSlice = createSlice({
     selectedCategory: (state, action: PayloadAction<string>) => {
       state.formData.category = action.payload;
     },
-    updateCoverUrl: (
-      state,
-      action: PayloadAction<AddCourseFormData["coverUrl"]>
-    ) => {
-      state.formData.coverUrl = action.payload;
-    },
     updateFormData: (
       state,
       action: PayloadAction<Partial<AddCourseFormData>>
@@ -83,6 +77,5 @@ export const {
   setSuccess,
   resetForm,
   selectedCategory,
-  updateCoverUrl,
 } = addCourseSlice.actions;
 export default addCourseSlice.reducer;

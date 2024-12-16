@@ -38,7 +38,7 @@ const AddCourse = () => {
   });
   return (
     <SafeAreaView>
-      <ScrollView>
+      <View>
         <View className="w-full py-4 px-6 flex flex-row gap-x-5 items-center">
           {currStep <= 1 && (
             <Button isDefault onPress={() => router.back()}>
@@ -68,7 +68,7 @@ const AddCourse = () => {
           {currStep === 6 && <CoursePrice />}
           {currStep === 7 && <CoursePreview />}
         </View>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   );
 };

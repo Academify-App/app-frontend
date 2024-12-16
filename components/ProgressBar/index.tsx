@@ -10,7 +10,11 @@ const ProgressBar = () => {
   return (
     <>
       <View className="relative">
-        <Text style={{ left: `${progressPercentage}%` }}>
+        <Text
+          style={{
+            left: `${progressPercentage === 100 ? "90" : progressPercentage}%`,
+          }}
+        >
           {progressPercentage.toFixed(0)}%
         </Text>
         <View className="w-full h-[7px] flex flex-row items-center bg-[#D9D9D9]">

@@ -1,38 +1,57 @@
 import React from "react";
-import { View, Text, TextInput, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image } from "react-native";
 import Button from "@/components/Button";
 import ProgressBar from "@/components/ProgressBar";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/store";
 import {
   setCurrStep,
   setIsSubmitting,
   setError,
+  addCourseMaterial,
+  setSuccess,
+  resetForm,
 } from "@/store/slices/addCourseSlice";
 import { RootState } from "@/store";
 import { AddCourseFormData } from "@/types/addCourse.types";
 import { Star1 } from "iconsax-react-native";
+import Loader from "@/components/Loader";
+import { showError } from "@/utils/alert";
+import { router } from "expo-router";
 
 const CoursePreview = () => {
-  const dispatch = useDispatch();
-  // console.log(coverUrl, url);
-  const currStep = useSelector((state: RootState) => state.addCourse.currStep);
-  const formData = useSelector((state: RootState) => state.addCourse.formData);
+  const dispatch = useDispatch<AppDispatch>();
+  const { currStep, isSubmitting, error, formData } = useSelector(
+    (state: RootState) => state.addCourse,
+  );
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<AddCourseFormData>({
     defaultValues: {
-      numberOfPages: 0,
-      department: "",
-      level: "",
+      ...formData,
+      numberOfPages: Number(formData.numberOfPages),
+      price: Number(formData.price),
     },
   });
 
-  const onSubmit = (data: AddCourseFormData) => {
-    console.log(data, formData);
-    dispatch(setCurrStep(currStep + 1));
+  const onSubmit = async (data: AddCourseFormData) => {
+    console.log(data);
+    // dispatch(setIsSubmitting(true));
+    try {
+      const result = await dispatch(addCourseMaterial(data)).unwrap();
+      dispatch(setSuccess(true));
+      setTimeout(() => {
+        dispatch(resetForm());
+        router.replace("/(root)/(facilitator)/Dashboard");
+      }, 2000);
+    } catch (error) {
+      showError(`${error}`);
+    } finally {
+      dispatch(setIsSubmitting(false));
+    }
   };
 
   return (
@@ -56,10 +75,7 @@ const CoursePreview = () => {
           </Text>
           <View className="mt-[14px] mb-[6px] flex flex-row justify-between">
             <View className="flex flex-row justify-between items-center">
-              <Text
-                className="text-base font-semibold text-[#202244] line-clamp-1"
-                style={{ WebkitLineClamp: 1 }}
-              >
+              <Text className="text-base font-semibold text-[#202244] line-clamp-1">
                 {formData.url?.name}
               </Text>
               <Text className="text-[#FF3E6C]"> - (PDF)</Text>
@@ -101,14 +117,12 @@ const CoursePreview = () => {
       <View className="bottom-[-30px] left-0 right-0 w-full px-5 pb-5 flex flex-col gap-y-7 bg-white">
         <ProgressBar />
         <View className="flex flex-row justify-center items-center mt-7">
-          <Button
-            className="w-full"
-            onPress={handleSubmit(onSubmit)}
-            // disabled={
-            //   !formData.numberOfPages || !formData.department || !formData.level
-            // }
-          >
-            <Text className="text-white text-lg font-medium">Publish</Text>
+          <Button className="w-full" onPress={handleSubmit(onSubmit)}>
+            {isSubmitting ? (
+              <Loader size="small" color="#fff" />
+            ) : (
+              <Text className="text-white text-lg font-medium">Publish</Text>
+            )}
           </Button>
         </View>
       </View>

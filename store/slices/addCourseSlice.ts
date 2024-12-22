@@ -1,5 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AddCourseFormState, AddCourseFormData } from "@/types/addCourse.types";
+import api from "@/services/api";
+import { AxiosError } from "axios";
 
 const initialState: AddCourseFormState = {
   formData: {
@@ -19,6 +21,22 @@ const initialState: AddCourseFormState = {
   success: false,
 };
 
+// Async thunk for adding course material
+export const addCourseMaterial = createAsyncThunk(
+  "addCourse/material",
+  async (data: AddCourseFormData, { rejectWithValue }) => {
+    try {
+      const response = await api.get("/materials", data);
+      console.log("response:", response.data);
+      return response.data; // You may want to return meaningful data here
+    } catch (error) {
+      const err = error as AxiosError;
+      console.log("error:", err.message);
+      return rejectWithValue(err.message || "An error occured");
+    }
+  },
+);
+
 const addCourseSlice = createSlice({
   name: "addCourse",
   initialState,
@@ -28,7 +46,7 @@ const addCourseSlice = createSlice({
     },
     updateFormData: (
       state,
-      action: PayloadAction<Partial<AddCourseFormData>>
+      action: PayloadAction<Partial<AddCourseFormData>>,
     ) => {
       state.formData = {
         ...state.formData,
@@ -37,19 +55,19 @@ const addCourseSlice = createSlice({
     },
     setFormData: (
       state,
-      action: PayloadAction<AddCourseFormState["formData"]>
+      action: PayloadAction<AddCourseFormState["formData"]>,
     ) => {
       state.formData = action.payload;
     },
     setCurrStep: (
       state,
-      action: PayloadAction<AddCourseFormState["currStep"]>
+      action: PayloadAction<AddCourseFormState["currStep"]>,
     ) => {
       state.currStep = action.payload;
     },
     setIsSubmitting: (
       state,
-      action: PayloadAction<AddCourseFormState["isSubmitting"]>
+      action: PayloadAction<AddCourseFormState["isSubmitting"]>,
     ) => {
       state.isSubmitting = action.payload;
     },
@@ -58,13 +76,30 @@ const addCourseSlice = createSlice({
     },
     setSuccess: (
       state,
-      action: PayloadAction<AddCourseFormState["success"]>
+      action: PayloadAction<AddCourseFormState["success"]>,
     ) => {
       state.success = action.payload;
     },
     resetForm: (state) => {
       return initialState;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(addCourseMaterial.pending, (state) => {
+        state.isSubmitting = true;
+        state.error = null;
+        state.success = false;
+      })
+      .addCase(addCourseMaterial.fulfilled, (state) => {
+        state.isSubmitting = false;
+        state.success = true;
+      })
+      .addCase(addCourseMaterial.rejected, (state, action) => {
+        state.isSubmitting = false;
+        state.error =
+          (action.payload as string) || "An error occurred while submitting.";
+      });
   },
 });
 
@@ -78,4 +113,5 @@ export const {
   resetForm,
   selectedCategory,
 } = addCourseSlice.actions;
+
 export default addCourseSlice.reducer;

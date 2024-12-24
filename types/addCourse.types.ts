@@ -6,14 +6,8 @@ export interface AddCourseFormData {
   title: string;
   description: string;
   price: number;
-  url: {
-    uri: string;
-    name: string;
-  } | null;
-  coverUrl: {
-    uri: string;
-    name: string;
-  } | null;
+  url: string | null;
+  coverUrl: string | null;
 }
 
 export interface AddCourseFormState {
@@ -22,4 +16,12 @@ export interface AddCourseFormState {
   isSubmitting: boolean;
   error: string | null;
   success: boolean;
+  document: {
+    uri: string;
+    name: string;
+  } | null;
+  coverImage: {
+    uri: string;
+    name: string;
+  } | null;
 }

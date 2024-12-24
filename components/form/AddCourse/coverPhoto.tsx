@@ -9,6 +9,8 @@ import {
   setCurrStep,
   setError,
   updateFormData,
+  updateCoverImage,
+  updateDocument,
 } from "@/store/slices/addCourseSlice";
 import { RootState } from "@/store";
 import { showError } from "@/utils/alert";
@@ -17,10 +19,12 @@ import { Add, Camera } from "iconsax-react-native";
 const CoverPhotoForm = () => {
   const dispatch = useDispatch();
   const { coverUrl, url } = useSelector(
-    (state: RootState) => state.addCourse.formData
+    (state: RootState) => state.addCourse.formData,
   );
   // console.log(coverUrl, url);
-  const currStep = useSelector((state: RootState) => state.addCourse.currStep);
+  const { currStep, document, coverImage } = useSelector(
+    (state: RootState) => state.addCourse,
+  );
   const { control, handleSubmit } = useForm({
     defaultValues: {
       coverUrl: coverUrl,
@@ -37,44 +41,36 @@ const CoverPhotoForm = () => {
     control,
   });
 
-  // selsct document or tutorial function
-  const handleUrlSelection = async () => {
+  // select document or tutorial function
+  const handleSelectDocument = async () => {
+    const documentTypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/vnd.oasis.opendocument.text",
+      "text/plain",
+      "application/vnd.oasis.opendocument.presentation",
+      "application/video.mp4",
+      "application/video.mpeg",
+      "application/video.mov",
+    ];
+
     try {
       const result = await DocumentPicker.getDocumentAsync({
-        type: [
-          "application/pdf",
-          "application/msword",
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-          "application/vnd.oasis.opendocument.text",
-          "text/plain",
-          "application/vnd.oasis.opendocument.presentation",
-          "application/video.mp4",
-          "application/video.mpeg",
-          "application/video.mov",
-        ],
+        type: documentTypes,
         copyToCacheDirectory: true,
       });
 
-      if (result.assets && result.assets[0].uri) {
-        urlField.onChange({
-          uri: result.assets[0].uri,
-          name: result.assets[0].name,
-        });
-        dispatch(
-          updateFormData({
-            url: {
-              uri: result.assets[0].uri,
-              name: result.assets[0].name,
-            },
-          }),
-        );
+      if (result.assets?.[0].uri) {
+        const { uri, name } = result.assets[0];
+        urlField.onChange({ uri, name });
+        dispatch(updateFormData({ url: uri }));
+        dispatch(updateDocument({ uri, name }));
       } else {
-        console.log(setError("Please select a file"));
+        dispatch(setError("Please select a file"));
       }
     } catch (error) {
-      // Ignore errors
-      console.log(error);
-      console.log(setError("Error selecting document"));
+      dispatch(setError("Error selecting document"));
     }
   };
 
@@ -91,12 +87,16 @@ const CoverPhotoForm = () => {
         });
         dispatch(
           updateFormData({
-            coverUrl: {
-              uri: result.assets[0].uri,
-              name: result.assets[0].name,
-            },
+            coverUrl: result.assets[0].uri,
           }),
         );
+        dispatch(
+          updateCoverImage({
+            uri: result.assets[0].uri,
+            name: result.assets[0].name,
+          }),
+        );
+        console.log(coverImage);
       } else {
         console.log("Please select a file");
       }
@@ -124,12 +124,12 @@ const CoverPhotoForm = () => {
       <View className="h-[430px] flex flex-col">
         <TouchableOpacity
           className="w-full h-[123px] rounded-[20px] border border-[#66666633] flex flex-row justify-center items-center mb-6"
-          onPress={handleUrlSelection}
+          onPress={handleSelectDocument}
         >
           {urlField.value ? (
             <View className="flex flex-row justify-center items-center gap-x-6 ">
               <Text className="text-base text-[#323232] font-semibold">
-                {urlField.value && urlField.value.name}
+                {urlField.value && document?.name}
               </Text>
             </View>
           ) : (
@@ -149,11 +149,11 @@ const CoverPhotoForm = () => {
           {coverUrlField.value ? (
             <View className="flex flex-row justify-center items-center gap-x-6 ">
               <Image
-                source={{ uri: coverUrlField.value.uri }}
+                source={{ uri: coverImage?.uri }}
                 className="w-20 h-20 ml-2 rounded"
               />
               <Text className="text-base text-[#323232] font-semibold">
-                {coverUrlField.value && coverUrlField.value.name}
+                {coverUrlField.value && coverImage?.name}
               </Text>
             </View>
           ) : (

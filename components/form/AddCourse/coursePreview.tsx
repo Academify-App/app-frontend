@@ -22,9 +22,8 @@ import { router } from "expo-router";
 
 const CoursePreview = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { currStep, isSubmitting, error, formData } = useSelector(
-    (state: RootState) => state.addCourse,
-  );
+  const { currStep, isSubmitting, error, formData, document, coverImage } =
+    useSelector((state: RootState) => state.addCourse);
   const {
     control,
     handleSubmit,
@@ -34,19 +33,22 @@ const CoursePreview = () => {
       ...formData,
       numberOfPages: Number(formData.numberOfPages),
       price: Number(formData.price),
+      coverUrl: formData?.coverUrl?.toString() || "",
+      url: formData?.url?.toString() || "",
     },
   });
 
   const onSubmit = async (data: AddCourseFormData) => {
     console.log(data);
+    console.log(typeof formData.url);
     // dispatch(setIsSubmitting(true));
     try {
       const result = await dispatch(addCourseMaterial(data)).unwrap();
       dispatch(setSuccess(true));
-      setTimeout(() => {
-        dispatch(resetForm());
-        router.replace("/(root)/(facilitator)/Dashboard");
-      }, 2000);
+      // setTimeout(() => {
+      //   dispatch(resetForm());
+      //   router.replace("/(root)/(facilitator)/Dashboard");
+      // }, 2000);
     } catch (error) {
       showError(`${error}`);
     } finally {
@@ -66,7 +68,7 @@ const CoursePreview = () => {
         <View className="border border-[#C4C4C480] rounded-xl px-[17px] py-[27px] relative flex flex-col">
           <View>
             <Image
-              source={{ uri: formData.coverUrl?.uri }}
+              source={{ uri: coverImage?.uri }}
               className="h-[250px] w-full object-cover rounded-lg"
             />
           </View>
@@ -76,7 +78,7 @@ const CoursePreview = () => {
           <View className="mt-[14px] mb-[6px] flex flex-row justify-between">
             <View className="flex flex-row justify-between items-center">
               <Text className="text-base font-semibold text-[#202244] line-clamp-1">
-                {formData.url?.name}
+                {document?.name}
               </Text>
               <Text className="text-[#FF3E6C]"> - (PDF)</Text>
             </View>

@@ -19,6 +19,8 @@ const initialState: AddCourseFormState = {
   isSubmitting: false,
   error: null,
   success: false,
+  document: null,
+  coverImage: null,
 };
 
 // Async thunk for adding course material
@@ -26,7 +28,7 @@ export const addCourseMaterial = createAsyncThunk(
   "addCourse/material",
   async (data: AddCourseFormData, { rejectWithValue }) => {
     try {
-      const response = await api.get("/materials", data);
+      const response = await api.post("/materials", data);
       console.log("response:", response.data);
       return response.data; // You may want to return meaningful data here
     } catch (error) {
@@ -52,6 +54,18 @@ const addCourseSlice = createSlice({
         ...state.formData,
         ...action.payload,
       };
+    },
+    updateDocument: (
+      state,
+      action: PayloadAction<{ uri: string; name: string }>,
+    ) => {
+      state.document = action.payload;
+    },
+    updateCoverImage: (
+      state,
+      action: PayloadAction<{ uri: string; name: string }>,
+    ) => {
+      state.coverImage = action.payload;
     },
     setFormData: (
       state,
@@ -112,6 +126,8 @@ export const {
   setSuccess,
   resetForm,
   selectedCategory,
+  updateDocument,
+  updateCoverImage,
 } = addCourseSlice.actions;
 
 export default addCourseSlice.reducer;

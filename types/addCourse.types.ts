@@ -7,7 +7,7 @@ export interface AddCourseFormData {
   description: string;
   price: number;
   url: string | null;
-  coverUrl: string | null;
+  cover_url: string | null;
 }
 
 export interface AddCourseFormState {

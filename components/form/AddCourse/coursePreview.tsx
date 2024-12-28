@@ -33,22 +33,21 @@ const CoursePreview = () => {
       ...formData,
       numberOfPages: Number(formData.numberOfPages),
       price: Number(formData.price),
-      coverUrl: formData?.coverUrl?.toString() || "",
+      cover_url: formData?.cover_url?.toString() || "",
       url: formData?.url?.toString() || "",
     },
   });
 
   const onSubmit = async (data: AddCourseFormData) => {
-    console.log(data);
-    console.log(typeof formData.url);
     // dispatch(setIsSubmitting(true));
     try {
       const result = await dispatch(addCourseMaterial(data)).unwrap();
+      console.log(result);
       dispatch(setSuccess(true));
-      // setTimeout(() => {
-      //   dispatch(resetForm());
-      //   router.replace("/(root)/(facilitator)/Dashboard");
-      // }, 2000);
+      setTimeout(() => {
+        dispatch(resetForm());
+        router.replace("/(root)/(facilitator)/Dashboard");
+      }, 3000);
     } catch (error) {
       showError(`${error}`);
     } finally {

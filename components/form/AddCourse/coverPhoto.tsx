@@ -18,7 +18,7 @@ import { Add, Camera } from "iconsax-react-native";
 
 const CoverPhotoForm = () => {
   const dispatch = useDispatch();
-  const { coverUrl, url } = useSelector(
+  const { cover_url, url } = useSelector(
     (state: RootState) => state.addCourse.formData,
   );
   // console.log(coverUrl, url);
@@ -27,7 +27,7 @@ const CoverPhotoForm = () => {
   );
   const { control, handleSubmit } = useForm({
     defaultValues: {
-      coverUrl: coverUrl,
+      cover_url: cover_url,
       url: url,
     },
   });
@@ -37,7 +37,7 @@ const CoverPhotoForm = () => {
   });
 
   const { field: coverUrlField } = useController({
-    name: "coverUrl",
+    name: "cover_url",
     control,
   });
 
@@ -87,7 +87,7 @@ const CoverPhotoForm = () => {
         });
         dispatch(
           updateFormData({
-            coverUrl: result.assets[0].uri,
+            cover_url: result.assets[0].uri,
           }),
         );
         dispatch(

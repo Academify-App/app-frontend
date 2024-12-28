@@ -13,7 +13,7 @@ const initialState: AddCourseFormState = {
     description: "",
     price: 0,
     url: null,
-    coverUrl: null,
+    cover_url: null,
   },
   currStep: 1,
   isSubmitting: false,

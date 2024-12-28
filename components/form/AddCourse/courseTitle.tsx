@@ -4,18 +4,12 @@ import Button from "@/components/Button";
 import ProgressBar from "@/components/ProgressBar";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setCurrStep,
-  setIsSubmitting,
-  setError,
-  updateFormData,
-} from "@/store/slices/addCourseSlice";
+import { setCurrStep, updateFormData } from "@/store/slices/addCourseSlice";
 import { RootState } from "@/store";
 import { AddCourseFormData } from "@/types/addCourse.types";
 
 const CourseTitleForm = () => {
   const dispatch = useDispatch();
-  // console.log(coverUrl, url);
   const currStep = useSelector((state: RootState) => state.addCourse.currStep);
   const formData = useSelector((state: RootState) => state.addCourse.formData);
   const {
@@ -29,7 +23,6 @@ const CourseTitleForm = () => {
   });
 
   const onSubmit = (data: AddCourseFormData) => {
-    console.log(data, formData);
     dispatch(setCurrStep(currStep + 1));
     dispatch(updateFormData(data));
   };
@@ -76,13 +69,7 @@ const CourseTitleForm = () => {
       </Text>
       <ProgressBar />
       <View className="flex flex-row justify-center items-center mt-7">
-        <Button
-          className="w-full"
-          onPress={handleSubmit(onSubmit)}
-          // disabled={
-          //   !formData.numberOfPages || !formData.department || !formData.level
-          // }
-        >
+        <Button className="w-full" onPress={handleSubmit(onSubmit)}>
           <Text className="text-white text-lg font-medium">Next</Text>
         </Button>
       </View>

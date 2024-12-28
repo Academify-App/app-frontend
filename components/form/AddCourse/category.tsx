@@ -4,18 +4,14 @@ import React from "react";
 import { View, Text, Pressable } from "react-native";
 import { useForm, useController } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectedCategory,
-  setCurrStep,
-  setError,
-} from "@/store/slices/addCourseSlice";
+import { selectedCategory, setCurrStep } from "@/store/slices/addCourseSlice";
 import { MaterialType } from "@/constants";
 import { RootState } from "@/store";
 
 const CategoryForm = () => {
   const dispatch = useDispatch();
   const category = useSelector(
-    (state: RootState) => state.addCourse.formData.category
+    (state: RootState) => state.addCourse.formData.category,
   );
   const currStep = useSelector((state: RootState) => state.addCourse.currStep);
   const { control, handleSubmit } = useForm();
@@ -30,7 +26,6 @@ const CategoryForm = () => {
     field.onChange(option);
   };
   const onSubmit = (data: any) => {
-    console.log(data);
     dispatch(setCurrStep(currStep + 1));
   };
 

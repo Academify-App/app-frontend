@@ -6,9 +6,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/store";
 import {
-  setCurrStep,
   setIsSubmitting,
-  setError,
   addCourseMaterial,
   setSuccess,
   resetForm,
@@ -22,10 +20,10 @@ import { router } from "expo-router";
 
 const CoursePreview = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { currStep, isSubmitting, error, formData, document, coverImage } =
-    useSelector((state: RootState) => state.addCourse);
+  const { isSubmitting, formData, document, coverImage } = useSelector(
+    (state: RootState) => state.addCourse,
+  );
   const {
-    control,
     handleSubmit,
     formState: { errors },
   } = useForm<AddCourseFormData>({
@@ -39,10 +37,8 @@ const CoursePreview = () => {
   });
 
   const onSubmit = async (data: AddCourseFormData) => {
-    // dispatch(setIsSubmitting(true));
     try {
       const result = await dispatch(addCourseMaterial(data)).unwrap();
-      console.log(result);
       dispatch(setSuccess(true));
       setTimeout(() => {
         dispatch(resetForm());

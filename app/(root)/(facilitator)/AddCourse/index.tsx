@@ -1,20 +1,11 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
-import {
-  updateFormData,
-  setCurrStep,
-  resetForm,
-  setFormData,
-  setIsSubmitting,
-  setError,
-  setSuccess,
-} from "@/store/slices/addCourseSlice";
-import { useForm } from "react-hook-form";
-import { ArrowLeft, TickCircle } from "iconsax-react-native";
+import { setCurrStep } from "@/store/slices/addCourseSlice";
+import { ArrowLeft } from "iconsax-react-native";
 import Button from "@/components/Button";
 import CourseDepartmentForm from "@/components/form/AddCourse/courseDepartment";
 import CourseTitleForm from "@/components/form/AddCourse/courseTitle";

@@ -10,7 +10,6 @@ import { AddCourseFormData } from "@/types/addCourse.types";
 
 const CourseDepartmentForm = () => {
   const dispatch = useDispatch();
-  // console.log(coverUrl, url);
   const currStep = useSelector((state: RootState) => state.addCourse.currStep);
   const formData = useSelector((state: RootState) => state.addCourse.formData);
   const {
@@ -26,7 +25,6 @@ const CourseDepartmentForm = () => {
   });
 
   const onSubmit = (data: AddCourseFormData) => {
-    console.log(data, formData);
     dispatch(setCurrStep(currStep + 1));
     dispatch(updateFormData(data));
   };
@@ -124,13 +122,7 @@ const CourseDepartmentForm = () => {
       </View>
       <ProgressBar />
       <View className="flex flex-row justify-center items-center mt-7">
-        <Button
-          className="w-full"
-          onPress={handleSubmit(onSubmit)}
-          // disabled={
-          //   !formData.numberOfPages || !formData.department || !formData.level
-          // }
-        >
+        <Button className="w-full" onPress={handleSubmit(onSubmit)}>
           <Text className="text-white text-lg font-medium">Next</Text>
         </Button>
       </View>

@@ -26,7 +26,6 @@ const PhoneNumberForm = () => {
   const onSubmit = (data: PhoneNumberFormData) => {
     setIsLoading(true);
     // Perform some asynchronous operation
-    console.log(data);
     const params = {
       otp: "123",
       email: data.phone,
@@ -34,7 +33,6 @@ const PhoneNumberForm = () => {
       subHeading: "Verify your phone number",
       title: "We sent you 4 digit code to verify your phone number",
     };
-    console.log(data);
     setTimeout(() => {
       setIsLoading(false);
       router.push({

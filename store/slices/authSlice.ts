@@ -34,14 +34,13 @@ export const login = createAsyncThunk(
       console.log("error:", err.message);
       return rejectWithValue(err.message || "An error occured");
     }
-  },
+  }
 );
 
 export const register = createAsyncThunk(
   "auth/register",
   async (data: SignUpFormData, { rejectWithValue }) => {
     try {
-      console.log(data);
       const response = await api.post("/api/register", data);
       // await AsyncStorage.setItem("token", response.data.token);
       return response.data;
@@ -50,7 +49,7 @@ export const register = createAsyncThunk(
       console.log("error:", err.message);
       return rejectWithValue(err.message || "An error occured");
     }
-  },
+  }
 );
 
 export const emailVerification = createAsyncThunk(
@@ -63,7 +62,7 @@ export const emailVerification = createAsyncThunk(
       const err = error as AxiosError;
       return rejectWithValue(err.response?.data || "An error occured");
     }
-  },
+  }
 );
 
 export const otp = createAsyncThunk(
@@ -76,7 +75,7 @@ export const otp = createAsyncThunk(
       const err = error as AxiosError;
       return rejectWithValue(err.response?.data || "An error occured");
     }
-  },
+  }
 );
 
 const authSlice = createSlice({

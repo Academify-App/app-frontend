@@ -24,7 +24,6 @@ const PhoneVerificationForm = () => {
   const onSubmit = (data: OTPFormData) => {
     setIsLoading(true);
     // Perform some asynchronous operation
-    console.log(data);
     setTimeout(() => {
       setIsLoading(false);
       router.push("/(auth)/SignIn");

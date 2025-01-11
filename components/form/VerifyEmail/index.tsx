@@ -24,7 +24,7 @@ const VerifyEmailForm = () => {
   const onSubmit = (data: OTPFormData) => {
     setIsLoading(true);
     // Perform some asynchronous operation
-    console.log(data);
+    // console.log(data);
     setTimeout(() => {
       setIsLoading(false);
       router.push("/(auth)/ResetPassword");

@@ -75,7 +75,6 @@ const CoursePreview = () => {
               <Text className="text-base font-semibold text-[#202244] line-clamp-1">
                 {document?.name}
               </Text>
-              <Text className="text-[#FF3E6C]"> - (PDF)</Text>
             </View>
             <View className="flex flex-row items-center gap-x-[2px]">
               <Text>New</Text>

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import Button from "@/components/Button";
 import ProgressBar from "@/components/ProgressBar";
-import { useForm, useController } from "react-hook-form";
+import { useForm, useController, set } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrStep,
@@ -12,14 +12,24 @@ import {
   updateCoverImage,
   updateDocument,
 } from "@/store/slices/addCourseSlice";
-import { RootState } from "@/store";
+import {
+  setProgress,
+  resetUpload,
+  setIsLoading,
+  cloudinaryUploadFile,
+} from "@/store/slices/cloudinaryUploadSlice";
+import { AppDispatch, RootState } from "@/store";
 import { showError } from "@/utils/alert";
 import { Add, Camera } from "iconsax-react-native";
+import { CloudinaryFilePayload } from "@/types/cloudinaryUpload.types";
 
 const CoverPhotoForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { cover_url, url } = useSelector(
     (state: RootState) => state.addCourse.formData,
+  );
+  const { progress, error, doc_url, isLoading } = useSelector(
+    (state: RootState) => state.cloudinaryUpload,
   );
   // console.log(coverUrl, url);
   const { currStep, document, coverImage } = useSelector(
@@ -50,11 +60,10 @@ const CoverPhotoForm = () => {
       "application/vnd.oasis.opendocument.text",
       "text/plain",
       "application/vnd.oasis.opendocument.presentation",
-      "application/video.mp4",
-      "application/video.mpeg",
-      "application/video.mov",
+      "video/mp4",
+      "video/quicktime",
     ];
-
+    dispatch(setIsLoading(true));
     try {
       const result = await DocumentPicker.getDocumentAsync({
         type: documentTypes,
@@ -63,8 +72,11 @@ const CoverPhotoForm = () => {
 
       if (result.assets?.[0].uri) {
         const { uri, name } = result.assets[0];
+
         urlField.onChange({ uri, name });
-        dispatch(updateFormData({ url: uri }));
+        const uploadResult = await dispatch(cloudinaryUploadFile(uri)).unwrap();
+        dispatch(setIsLoading(false));
+        dispatch(updateFormData({ url: uploadResult.secure_url }));
         dispatch(updateDocument({ uri, name }));
       } else {
         dispatch(setError("Please select a file"));
@@ -76,18 +88,21 @@ const CoverPhotoForm = () => {
 
   // selsct cover photo function
   const handleCoverUrlSelection = async () => {
+    dispatch(setIsLoading(true));
     try {
       const result = await DocumentPicker.getDocumentAsync({
         type: ["image/jpeg", "image/png", "image/jpg"],
       });
       if (result.assets && result.assets[0].uri) {
-        coverUrlField.onChange({
-          uri: result.assets[0].uri,
-          name: result.assets[0].name,
-        });
+        const { uri, name } = result.assets[0];
+
+        coverUrlField.onChange({ uri, name });
+        const uploadResult = await dispatch(cloudinaryUploadFile(uri)).unwrap();
+        console.log(uploadResult);
+        dispatch(setIsLoading(false));
         dispatch(
           updateFormData({
-            cover_url: result.assets[0].uri,
+            cover_url: uploadResult.secure_url,
           }),
         );
         dispatch(
@@ -108,7 +123,6 @@ const CoverPhotoForm = () => {
   };
 
   const onSubmit = (data: any) => {
-    console.log(data);
     dispatch(setCurrStep(currStep + 1));
   };
 
@@ -122,49 +136,66 @@ const CoverPhotoForm = () => {
         videos for tutorials.
       </Text>
       <View className="h-[430px] flex flex-col">
-        <TouchableOpacity
-          className="w-full h-[123px] rounded-[20px] border border-[#66666633] flex flex-row justify-center items-center mb-6"
-          onPress={handleSelectDocument}
-        >
-          {urlField.value ? (
-            <View className="flex flex-row justify-center items-center gap-x-6 ">
-              <Text className="text-base text-[#323232] font-semibold">
-                {urlField.value && document?.name}
-              </Text>
-            </View>
-          ) : (
-            <View className="flex flex-row justify-center items-center gap-x-6 ">
-              <Add size="27" color="#292D32" />
-              <Text className="text-base text-[#323232] font-semibold">
-                Add Doc or Video Material
-              </Text>
-            </View>
-          )}
-        </TouchableOpacity>
+        <View className="mb-6">
+          <TouchableOpacity
+            className="w-full h-[123px] rounded-[20px] border border-[#66666633] flex flex-row justify-center items-center"
+            onPress={handleSelectDocument}
+          >
+            {urlField.value ? (
+              <View className="flex flex-row justify-center items-center gap-x-6 ">
+                <Text className="text-base text-[#323232] font-semibold">
+                  {urlField.value && document?.name}
+                </Text>
+              </View>
+            ) : (
+              <View className="flex flex-row justify-center items-center gap-x-6 ">
+                <Add size="27" color="#292D32" />
+                <Text className="text-base text-[#323232] font-semibold">
+                  Add Doc or Video Material
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        </View>
 
-        <TouchableOpacity
-          className="w-full h-[123px] rounded-[20px] border border-[#66666633] flex flex-row justify-center items-center mb-6"
-          onPress={handleCoverUrlSelection}
-        >
-          {coverUrlField.value ? (
-            <View className="flex flex-row justify-center items-center gap-x-6 ">
-              <Image
-                source={{ uri: coverImage?.uri }}
-                className="w-20 h-20 ml-2 rounded"
+        <View className="mb-6">
+          <TouchableOpacity
+            className="w-full h-[123px] rounded-[20px] border border-[#66666633] flex flex-row justify-center items-center"
+            onPress={handleCoverUrlSelection}
+          >
+            {coverUrlField.value ? (
+              <View className="flex flex-col justify-center items-center gap-x-6 ">
+                <Image
+                  source={{ uri: coverImage?.uri }}
+                  className="w-20 h-20 ml-2 rounded"
+                />
+                <Text className="text-base text-[#323232] text-center font-semibold">
+                  {coverUrlField.value && coverImage?.name}
+                </Text>
+              </View>
+            ) : (
+              <View className="flex flex-row justify-center items-center gap-x-6 ">
+                <Camera size="27" color="#292D32" />
+                <Text className="text-base text-[#323232] font-semibold">
+                  Cover Photos
+                </Text>
+              </View>
+            )}
+          </TouchableOpacity>
+        </View>
+        {isLoading && (
+          <View className="w-full mt-2 flex flex-row justify-between items-center">
+            <View className="w-[90%] bg-[#DDE0FF] rounded-full h-[7px]">
+              <View
+                className="bg-[#6E1FEF] h-[7px] rounded-full"
+                style={{ width: `${progress}%` }}
               />
-              <Text className="text-base text-[#323232] font-semibold">
-                {coverUrlField.value && coverImage?.name}
-              </Text>
             </View>
-          ) : (
-            <View className="flex flex-row justify-center items-center gap-x-6 ">
-              <Camera size="27" color="#292D32" />
-              <Text className="text-base text-[#323232] font-semibold">
-                Cover Photos
-              </Text>
-            </View>
-          )}
-        </TouchableOpacity>
+            <Text className="text-sm text-[#6E1FEF] font-medium">
+              {progress}%
+            </Text>
+          </View>
+        )}
       </View>
       <ProgressBar />
       <View className="flex flex-row justify-center items-center mt-7">

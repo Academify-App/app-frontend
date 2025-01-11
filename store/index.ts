@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
 import addCourseReducer from "./slices/addCourseSlice";
+import cloudinaryUploadReducer from "./slices/cloudinaryUploadSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     addCourse: addCourseReducer,
+    cloudinaryUpload: cloudinaryUploadReducer,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({

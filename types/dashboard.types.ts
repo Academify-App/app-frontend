@@ -9,4 +9,5 @@ export interface BottomSheetType {
 export interface DashboardHeadingPropsType {
   title: string;
   link: string;
+  linkText: string;
 }

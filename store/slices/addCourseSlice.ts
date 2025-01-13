@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AddCourseFormState, AddCourseFormData } from "@/types/addCourse.types";
+import { AddCourseFormState, AddCourseFormData } from "@/types/course.types";
 import api from "@/services/api";
 import { AxiosError } from "axios";
 

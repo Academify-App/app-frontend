@@ -12,7 +12,7 @@ import {
   resetForm,
 } from "@/store/slices/addCourseSlice";
 import { RootState } from "@/store";
-import { AddCourseFormData } from "@/types/addCourse.types";
+import { AddCourseFormData } from "@/types/course.types";
 import { Star1 } from "iconsax-react-native";
 import Loader from "@/components/Loader";
 import { showError } from "@/utils/alert";
@@ -21,7 +21,7 @@ import { router } from "expo-router";
 const CoursePreview = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { isSubmitting, formData, document, coverImage } = useSelector(
-    (state: RootState) => state.addCourse,
+    (state: RootState) => state.addCourse
   );
   const {
     handleSubmit,

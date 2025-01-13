@@ -34,7 +34,7 @@ export const login = createAsyncThunk(
       console.log("error:", err.message);
       return rejectWithValue(err.message || "An error occured");
     }
-  }
+  },
 );
 
 export const register = createAsyncThunk(
@@ -49,7 +49,7 @@ export const register = createAsyncThunk(
       console.log("error:", err.message);
       return rejectWithValue(err.message || "An error occured");
     }
-  }
+  },
 );
 
 export const emailVerification = createAsyncThunk(
@@ -62,7 +62,7 @@ export const emailVerification = createAsyncThunk(
       const err = error as AxiosError;
       return rejectWithValue(err.response?.data || "An error occured");
     }
-  }
+  },
 );
 
 export const otp = createAsyncThunk(
@@ -75,7 +75,7 @@ export const otp = createAsyncThunk(
       const err = error as AxiosError;
       return rejectWithValue(err.response?.data || "An error occured");
     }
-  }
+  },
 );
 
 const authSlice = createSlice({

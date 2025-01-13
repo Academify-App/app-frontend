@@ -6,7 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrStep, updateFormData } from "@/store/slices/addCourseSlice";
 import { RootState } from "@/store";
-import { AddCourseFormData } from "@/types/addCourse.types";
+import { AddCourseFormData } from "@/types/course.types";
 
 const CoursePrice = () => {
   const dispatch = useDispatch();

@@ -14,7 +14,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { showError, showSuccess } from "@/utils/alert";
 import { fetchCourses } from "@/store/slices/getCoursesSlice";
-import { GetCourses } from "@/types/course.types";
 import { logout } from "@/store/slices/authSlice";
 import { router, Link } from "expo-router";
 import Loader from "@/components/Loader";

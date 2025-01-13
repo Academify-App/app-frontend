@@ -20,11 +20,6 @@ const CourseCard = ({
     const decimalPart = parts.length > 1 ? "." + parts[1] : "";
     return integerPart + decimalPart;
   }
-
-  console.log(formatNumberWithCommas(1234)); // Output: "1,234"
-  console.log(formatNumberWithCommas(1234567)); // Output: "1,234,567"
-  console.log(formatNumberWithCommas(1234567.89)); // Output: "1,234,567.89"
-  console.log(formatNumberWithCommas("12345")); // Output: "12,345"
   return (
     <View className={`mt-3 flex w-[48%] ${id === 1 || id === 3 ? "mr-3" : ""}`}>
       <View
@@ -52,11 +47,13 @@ const CourseCard = ({
             >
               {department}
             </Text>
-            <Text
-              className={`${id === 1 || id === 4 ? "text-white" : "text-[#381977]"} text-xs font-bold`}
-            >
-              ₦{formatNumberWithCommas(price)}
-            </Text>
+            {price && (
+              <Text
+                className={`${id === 1 || id === 4 ? "text-white" : "text-[#381977]"} text-xs font-bold`}
+              >
+                ₦{formatNumberWithCommas(price)}
+              </Text>
+            )}
           </View>
           <Text
             className={`${id === 1 || id === 4 ? "text-white" : "text-[#202244]"} text-xs  font-bold mt-1`}

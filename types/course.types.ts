@@ -53,12 +53,12 @@ export interface GetCoursesState {
 }
 
 export interface CourseCardProps {
-  id: number;
-  cover_url: string;
-  title: string;
-  description: string;
-  price: string;
-  reviews: Review[];
-  level: string;
-  department: string;
+  id?: number;
+  cover_url?: string;
+  title?: string;
+  description?: string;
+  price?: string;
+  reviews?: Review[];
+  level?: string;
+  department?: string;
 }

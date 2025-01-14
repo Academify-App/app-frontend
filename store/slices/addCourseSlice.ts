@@ -29,14 +29,13 @@ export const addCourseMaterial = createAsyncThunk(
   async (data: AddCourseFormData, { rejectWithValue }) => {
     try {
       const response = await api.post("/materials", data);
-      console.log("response:", response.data);
       return response.data; // You may want to return meaningful data here
     } catch (error) {
       const err = error as AxiosError;
       console.log("error:", err.message);
       return rejectWithValue(err.message || "An error occured");
     }
-  }
+  },
 );
 
 const addCourseSlice = createSlice({
@@ -48,7 +47,7 @@ const addCourseSlice = createSlice({
     },
     updateFormData: (
       state,
-      action: PayloadAction<Partial<AddCourseFormData>>
+      action: PayloadAction<Partial<AddCourseFormData>>,
     ) => {
       state.formData = {
         ...state.formData,
@@ -57,31 +56,31 @@ const addCourseSlice = createSlice({
     },
     updateDocument: (
       state,
-      action: PayloadAction<{ uri: string; name: string }>
+      action: PayloadAction<{ uri: string; name: string }>,
     ) => {
       state.document = action.payload;
     },
     updateCoverImage: (
       state,
-      action: PayloadAction<{ uri: string; name: string }>
+      action: PayloadAction<{ uri: string; name: string }>,
     ) => {
       state.coverImage = action.payload;
     },
     setFormData: (
       state,
-      action: PayloadAction<AddCourseFormState["formData"]>
+      action: PayloadAction<AddCourseFormState["formData"]>,
     ) => {
       state.formData = action.payload;
     },
     setCurrStep: (
       state,
-      action: PayloadAction<AddCourseFormState["currStep"]>
+      action: PayloadAction<AddCourseFormState["currStep"]>,
     ) => {
       state.currStep = action.payload;
     },
     setIsSubmitting: (
       state,
-      action: PayloadAction<AddCourseFormState["isSubmitting"]>
+      action: PayloadAction<AddCourseFormState["isSubmitting"]>,
     ) => {
       state.isSubmitting = action.payload;
     },
@@ -90,7 +89,7 @@ const addCourseSlice = createSlice({
     },
     setSuccess: (
       state,
-      action: PayloadAction<AddCourseFormState["success"]>
+      action: PayloadAction<AddCourseFormState["success"]>,
     ) => {
       state.success = action.payload;
     },

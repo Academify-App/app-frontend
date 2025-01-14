@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import Button from "@/components/Button";
 import ProgressBar from "@/components/ProgressBar";
-import { useForm, useController, set } from "react-hook-form";
+import { useForm, useController } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrStep,
@@ -13,22 +13,19 @@ import {
   updateDocument,
 } from "@/store/slices/addCourseSlice";
 import {
-  setProgress,
-  resetUpload,
   setIsLoading,
   cloudinaryUploadFile,
 } from "@/store/slices/cloudinaryUploadSlice";
 import { AppDispatch, RootState } from "@/store";
 import { showError } from "@/utils/alert";
 import { Add, Camera } from "iconsax-react-native";
-import { CloudinaryFilePayload } from "@/types/cloudinaryUpload.types";
 
 const CoverPhotoForm = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { cover_url, url } = useSelector(
     (state: RootState) => state.addCourse.formData,
   );
-  const { progress, error, doc_url, isLoading } = useSelector(
+  const { progress, isLoading } = useSelector(
     (state: RootState) => state.cloudinaryUpload,
   );
   // console.log(coverUrl, url);
@@ -98,7 +95,6 @@ const CoverPhotoForm = () => {
 
         coverUrlField.onChange({ uri, name });
         const uploadResult = await dispatch(cloudinaryUploadFile(uri)).unwrap();
-        console.log(uploadResult);
         dispatch(setIsLoading(false));
         dispatch(
           updateFormData({
@@ -111,7 +107,6 @@ const CoverPhotoForm = () => {
             name: result.assets[0].name,
           }),
         );
-        console.log(coverImage);
       } else {
         console.log("Please select a file");
       }
@@ -122,7 +117,7 @@ const CoverPhotoForm = () => {
     }
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit = () => {
     dispatch(setCurrStep(currStep + 1));
   };
 

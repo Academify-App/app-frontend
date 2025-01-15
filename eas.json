@@ -1,0 +1,35 @@
+{
+  "cli": {
+    "version": ">= 14.4.0",
+    "appVersionSource": "remote",
+    "requireCommit": true
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://app-backend-hrvd.onrender.com/",
+        "EXPO_PUBLIC_UPLOAD_PRESET":"content_preset",
+        "EXPO_PUBLIC_CLOUD_NAME":"dyek6mrq5"
+      }
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://app-backend-hrvd.onrender.com/",
+        "EXPO_PUBLIC_UPLOAD_PRESET":"content_preset",
+        "EXPO_PUBLIC_CLOUD_NAME":"dyek6mrq5"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

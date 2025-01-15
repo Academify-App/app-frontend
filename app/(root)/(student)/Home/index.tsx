@@ -27,7 +27,8 @@ const Home = () => {
   const dispatch = useAppDispatch();
   const { isLoading, error, user } = useAppSelector((state) => state.auth);
   const { courses } = useAppSelector((state) => state.getCourses);
-  const coursePreview = courses.slice(0, 4);
+  const coursePreview = [...courses].reverse().slice(0, 4);
+  console.log(courses, coursePreview);
 
   useEffect(() => {
     dispatch(fetchCourses());
@@ -146,6 +147,7 @@ const Home = () => {
             keyExtractor={(item) => item.id.toString()}
             horizontal={false}
             numColumns={2}
+            columnWrapperStyle={{ justifyContent: "space-between" }}
             refreshControl={
               <RefreshControl
                 refreshing={isLoading}

@@ -21,7 +21,7 @@ const CourseCard = ({
     return integerPart + decimalPart;
   }
   return (
-    <View className={`mt-3 flex w-[48%] ${id === 1 || id === 3 ? "mr-3" : ""}`}>
+    <View className={`mt-3 flex w-[48%]`}>
       <View
         className="relative h-[144px] rounded-xl overflow-hidden"
         style={{

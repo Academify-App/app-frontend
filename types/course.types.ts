@@ -46,6 +46,13 @@ export interface GetCourses {
   reviews: Review[];
 }
 
+export interface GetCoursesByCategoryState {
+  courses: GetCourses[];
+  category: string;
+  isLoading: boolean;
+  error: string | null; 
+}
+
 export interface GetCoursesState {
   courses: GetCourses[];
   isLoading: boolean;
@@ -61,4 +68,5 @@ export interface CourseCardProps {
   reviews?: Review[];
   level?: string;
   department?: string;
+  url?: string;
 }

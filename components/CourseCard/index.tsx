@@ -2,9 +2,9 @@ import { Heart, Star1 } from "iconsax-react-native";
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { CourseCardProps } from "@/types/course.types";
+import { useRouter } from "expo-router";
 
 const CourseCard = ({
-  id,
   cover_url,
   title,
   description,
@@ -12,14 +12,40 @@ const CourseCard = ({
   reviews,
   level,
   department,
+  id,
+  url,
 }: CourseCardProps) => {
+  const router = useRouter();
   function formatNumberWithCommas(number: number | string): string {
+    if (number === undefined || number === null) {
+      return "0"; // Return a default value when number is undefined or null
+    }
+
     const numStr = number.toString();
     const parts = numStr.split("."); // Split on decimal if present
     const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     const decimalPart = parts.length > 1 ? "." + parts[1] : "";
     return integerPart + decimalPart;
   }
+
+  const handleNavigation = (url: string, id: string) => {
+    if (!url) return;
+
+    const formatUrl = url.toLocaleLowerCase();
+
+    if (formatUrl.endsWith(".pdf")) {
+      router.push({
+        pathname: "/(student)/PdfMaterials/[pdfDetails]",
+        params: { id: id.toString() },
+      });
+    } else if (formatUrl.endsWith(".mp4")) {
+      router.push({
+        pathname: "/(student)/VideoTutorials/[details]",
+        params: { id: id.toString() },
+      });
+    }
+  };
+
   return (
     <View className={`mt-3 flex w-[48%]`}>
       <View
@@ -40,6 +66,7 @@ const CourseCard = ({
         </View>
         <TouchableOpacity
           className={`${id === 1 || id === 4 ? "bg-[#111111]" : "bg-[#F2EEFD]"} h-1/2 px-2 py-[5px]`}
+          onPress={() => url && id && handleNavigation(url, id.toString())}
         >
           <View className="flex flex-row justify-between items-center">
             <Text

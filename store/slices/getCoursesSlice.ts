@@ -12,10 +12,10 @@ export const fetchCourses = createAsyncThunk(
   "courses/fetchCourses",
   async () => {
     const response = await axios.get<GetCourses[]>(
-      `${process.env.EXPO_PUBLIC_API_URL}materials`,
+      `${process.env.EXPO_PUBLIC_API_URL}materials`
     );
     return response.data;
-  },
+  }
 );
 
 const getCoursesSlice = createSlice({

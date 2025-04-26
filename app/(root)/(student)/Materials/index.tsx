@@ -21,7 +21,6 @@ const Materials = () => {
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [submittedQuery, setSubmittedQuery] = useState("");
-
   useEffect(() => {
     dispatch(fetchCourses());
   }, [dispatch]);
@@ -76,6 +75,8 @@ const Materials = () => {
             reviews={item.reviews}
             level={item.level}
             department={item.department}
+            url={item.url}
+            id={item.id}
           />
         )}
         keyExtractor={(item) => item.id.toString()}

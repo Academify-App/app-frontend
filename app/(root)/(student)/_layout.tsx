@@ -97,6 +97,35 @@ const UserLayout = () => {
           headerShown: false,
         }}
       />
+      <Tabs.Screen
+        name="PdfMaterials/index"
+        options={{
+          href: null,
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="PdfMaterials/[pdfDetails]"
+        options={{
+          href: null,
+          headerShown: false,
+        }}
+      />
+      <Tabs.Screen
+        name="VideoTutorials/index"
+        options={{
+          href: null,
+          headerShown: false,
+        }}
+      />
+      
+      <Tabs.Screen
+        name="VideoTutorials/[details]"
+        options={{
+          href: null,
+          headerShown: false,
+        }}
+      />
     </Tabs>
   );
 };

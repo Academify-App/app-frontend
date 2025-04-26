@@ -114,19 +114,19 @@ const Home = () => {
         />
         <View className="mt-4 flex flex-row justify-between items-center gap-x-[11px]">
           <Link
-            href="/(student)/Materials"
+            href="/(student)/AllCategories"
             className="text-center text-[#242424] text-sm font-medium px-[18px] py-[10px] bg-white border-[0.5px] border-[#44444444] rounded-xl"
           >
             All Materials
           </Link>
           <Link
-            href="/(student)/Materials"
+            href="/(student)/PdfMaterials"
             className="text-center text-[#242424] text-sm font-medium px-[18px] py-[10px] bg-white border-[0.5px] border-[#44444444] rounded-xl"
           >
             PDF Materials
           </Link>
           <Link
-            href="/(student)/Materials"
+            href="/(student)/PdfMaterials"
             className="text-center text-[#242424] text-sm font-medium px-[18px] py-[10px] bg-white border-[0.5px] border-[#44444444] rounded-xl"
           >
             E-Books
@@ -134,7 +134,7 @@ const Home = () => {
         </View>
         <View className="flex flex-row items-center gap-x-[11px] mt-[11px]">
           <Link
-            href="/(student)/Materials"
+            href="/(student)/VideoTutorials"
             className="text-center text-[#242424] text-sm font-medium px-[18px] py-[10px] bg-white border-[0.5px] border-[#44444444] rounded-xl"
           >
             Tutorials
@@ -166,6 +166,7 @@ const Home = () => {
                     reviews={item.reviews}
                     level={item.level}
                     department={item.department}
+                    url={item.url}
                   />
                 ))
               ) : !isLoading ? (

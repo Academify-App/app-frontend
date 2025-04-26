@@ -27,7 +27,7 @@ const AllCategories = () => {
         </Text>
       </View>
       <View className="flex flex-row gap-x-6 w-full">
-        <Link href={"/(student)/Home/Category/1"} className="w-[45%]">
+        <Link href={"/(student)/Materials"} className="w-[45%]">
           <View
             className="flex flex-col items-center justify-center h-[165px] gap-y-[5px] bg-[#Ffffff] rounded-xl p-4 w-full border-[0.5px] border-[#66666666]"
             style={{
@@ -41,7 +41,7 @@ const AllCategories = () => {
             </Text>
           </View>
         </Link>
-        <Link href={"/(student)/Home/Category/1"} className="w-[45%]">
+        <Link href={"/(student)/VideoTutorials"} className="w-[45%]">
           <View
             className="flex flex-col items-center justify-center h-[165px] gap-y-[5px] bg-[#Ffffff] rounded-xl p-4 w-full border-[0.5px] border-[#66666666]"
             style={{
@@ -57,7 +57,7 @@ const AllCategories = () => {
         </Link>
       </View>
       <View className="flex flex-row gap-x-6 w-full mt-6">
-        <Link href={"/(student)/Home/Category/1"} className="w-[45%]">
+        <Link href={"/(student)/PdfMaterials"} className="w-[45%]">
           <View
             className="flex flex-col items-center justify-center h-[165px] gap-y-[5px] bg-[#Ffffff] rounded-xl p-4 w-full border-[0.5px] border-[#66666666]"
             style={{
@@ -71,7 +71,7 @@ const AllCategories = () => {
             </Text>
           </View>
         </Link>
-        <Link href={"/(student)/Home/Category/1"} className="w-[45%]">
+        <Link href={"/(student)/PdfMaterials"} className="w-[45%]">
           <View
             className="flex flex-col items-center justify-center h-[165px] gap-y-[5px] bg-[#Ffffff] rounded-xl p-4 w-full border-[0.5px] border-[#66666666]"
             style={{

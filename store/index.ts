@@ -3,6 +3,7 @@ import authReducer from "./slices/authSlice";
 import addCourseReducer from "./slices/addCourseSlice";
 import cloudinaryUploadReducer from "./slices/cloudinaryUploadSlice";
 import getCoursesReducer from "./slices/getCoursesSlice";
+import getCoursesByCategoryReducer from "./slices/getCoursesByCategorySlice";
 import filterReducer from "./slices/filterSlice";
 
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
     cloudinaryUpload: cloudinaryUploadReducer,
     getCourses: getCoursesReducer,
     filter: filterReducer,
+    getCoursesByCategory: getCoursesByCategoryReducer,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware({

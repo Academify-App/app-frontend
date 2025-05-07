@@ -25,7 +25,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/splash.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#F4EEFF"
       },
       "package": "com.utfrank.Academify"
     },
